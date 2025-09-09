@@ -12,22 +12,25 @@ class HelpRequestSeeder extends Seeder
 {
     public function run(): void
     {
-        $user = User::first();
-        $category = HelpCategory::first();
+        $users = User::all();
+        $categories = HelpCategory::all();
+        $addresses = Address::all();
 
-        $addr = Address::create([
-            'street' => 'Avenue Albert 1er',
-            'city' => 'Liège',
-            'postcode' => '4000',
-        ]);
+        if ($users->isEmpty() || $categories->isEmpty() || $addresses->isEmpty()) {
+            $this->command->warn('Impossible de créer des demandes : utilisateurs, catégories ou adresses manquants.');
+            return;
+        }
 
-        HelpRequest::create([
-            'user_id' => $user->id,
-            'category_id' => $category->id,
-            'address_id' => $addr->id,
-            'title' => 'Besoin d’aide pour faire les courses',
-            'description' => 'Je cherche un bénévole pour m’aider samedi matin.',
-            'status' => 'pending'
-        ]);
+        // Créons 10 demandes aléatoires
+        for ($i = 1; $i <= 10; $i++) {
+            HelpRequest::create([
+                'title' => "Demande d'aide #$i",
+                'description' => "Description de la demande d'aide numéro $i.",
+                'user_id' => $users->random()->id,
+                'category_id' => $categories->random()->id,
+                'address_id' => $addresses->random()->id,
+                'status' => 'pending',
+            ]);
+        }
     }
 }

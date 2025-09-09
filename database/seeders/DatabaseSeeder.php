@@ -17,8 +17,8 @@ class DatabaseSeeder extends Seeder
             HelpCategorySeeder::class,
             AddressSeeder::class,
             UserSeeder::class,
-            HelpRequestSeeder::class,
             OrganizationSeeder::class,
+            HelpRequestSeeder::class,
             MissionSeeder::class,
         ]);
     }
