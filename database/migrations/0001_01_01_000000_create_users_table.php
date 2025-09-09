@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('phone')->nullable();
-            $table->foreignId('address_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('address_id')->nullable()->constrained('addresses')->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
         });
