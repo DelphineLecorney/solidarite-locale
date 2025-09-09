@@ -6,55 +6,69 @@
     <title>Solidarité Locale</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-@vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top shadow-sm">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm sticky-top">
         <div class="container-fluid">
-            <a class="navbar-brand fw-bold" href="{{ route('home') }}">Home</a>
-
+            <a class="navbar-brand fw-bold" href="{{ route('home') }}">Solidarité Locale</a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link active" href="{{ route('dashboard') }}">Dashboard</a></li>
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
 
-                    <li class="nav-item"><a class="nav-link" href="#">Utilisateurs</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Demandes</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Se connecter</a></li>
+                    @auth
+                        <li class="nav-item"><a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a></li>
+                    @endauth
                 </ul>
+
+
+                <div class="d-flex align-items-center">
+                    <span class="text-white me-3">
+                        Bienvenue
+                        @auth
+                            {{ Auth::user()->name }}
+                        @else
+                            invité
+                        @endauth
+                    </span>
+
+                    @guest
+                        <a href="{{ route('login') }}" class="btn btn-outline-light btn-sm me-2">Se connecter</a>
+                        <a href="{{ route('register') }}" class="btn btn-light btn-sm">S’inscrire</a>
+                    @else
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button class="btn btn-outline-light btn-sm" type="submit">Déconnexion</button>
+                        </form>
+                    @endguest
+                </div>
             </div>
         </div>
     </nav>
 
 
-    <header class="my-5 d-flex justify-content-center">
-        <div class="text-center p-1 rounded shadow-lg w-100"
-             style="max-width: 700px; background: linear-gradient(135deg, #4e73df, #1cc88a); color: white;">
-            <h1 class="display-4 fw-bold mb-3">
-                Bienvenue
-                @auth
-                    {{ Auth::user()->name }}
-                @else
-                    invité sur Solidarité Locale
-                @endauth
-            </h1>
-
-            @auth
-                <p class="lead">Ravi de vous revoir sur <strong>Solidarité Locale</strong> !</p>
-            @endauth
-        </div>
-    </header>
-
-
-    <main class="container mt-4">
+    <main class="flex-grow-1 container mt-4">
         @yield('content')
     </main>
+
+
+    <footer class="bg-dark text-white py-4 mt-auto">
+        <div class="container text-center">
+            &copy; {{ date('Y') }} Solidarité Locale. Tous droits réservés.
+            <div class="mt-2">
+                <a href="#" class="text-white me-2">Mentions légales</a>
+                <a href="#" class="text-white">Contact</a>
+            </div>
+        </div>
+    </footer>
+
 </body>
 </html>
