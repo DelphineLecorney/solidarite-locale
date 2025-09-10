@@ -16,6 +16,19 @@ class RegisterController extends Controller
         return view('auth.register');
     }
 
+    protected function redirectTo()
+    {
+        $user = Auth::user();
+
+        return match ($user->role) {
+            'admin' => '/admin/dashboard',
+            'association' => '/missions',
+            'user' => '/dashboard',
+            default => '/',
+        };
+    }
+
+
     public function register(Request $request)
     {
         $request->validate([
