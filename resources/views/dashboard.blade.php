@@ -57,6 +57,31 @@
 <!-- Tableau des dernières demandes -->
 <h2 class="mb-3">Dernières demandes d’aide</h2>
 
+<form method="GET" action="{{ route('dashboard') }}" class="row g-2 mb-3">
+    <div class="col-md-4">
+        <select name="category" class="form-select">
+            <option value="">Toutes les catégories</option>
+            @foreach($categories as $cat)
+                <option value="{{ $cat->id }}" {{ request('category') == $cat->id ? 'selected' : '' }}>
+                    {{ $cat->name }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+    <div class="col-md-4">
+        <select name="status" class="form-select">
+            <option value="">Tous les statuts</option>
+            <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>En attente</option>
+            <option value="accepted" {{ request('status') == 'accepted' ? 'selected' : '' }}>Acceptée</option>
+            <option value="done" {{ request('status') == 'done' ? 'selected' : '' }}>Terminée</option>
+        </select>
+    </div>
+    <div class="col-md-4">
+        <button type="submit" class="btn btn-primary w-100">Filtrer</button>
+    </div>
+</form>
+
+
 <table class="table table-striped table-bordered table-hover">
     <thead class="table-dark">
         <tr>

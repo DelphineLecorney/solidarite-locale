@@ -15,12 +15,24 @@ class DashboardController extends Controller
     //     $this->middleware('auth');
     // }
 
-    public function index()
+    public function index(Request $request)
     {
         $usersCount = User::count();
         $requestsCount = HelpRequest::count();
         $categoriesCount = HelpCategory::count();
         $othersCount = 0;
+
+        $categories = HelpCategory::all();
+        $query = HelpRequest::with(['user', 'category', 'address']);
+        if ($request->filled('category')) {
+            $query->where('help_category_id', $request->category);
+        }
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $helpRequests = $query->latest()->paginate(10);
 
         // Dernières demandes avec relations préchargées
         $helpRequests = HelpRequest::with(['user', 'category', 'address'])
@@ -33,7 +45,8 @@ class DashboardController extends Controller
             'requestsCount',
             'categoriesCount',
             'othersCount',
-            'helpRequests'
+            'helpRequests',
+            'categories'
         ));
     }
 }
