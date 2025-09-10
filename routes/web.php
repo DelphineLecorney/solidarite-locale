@@ -1,31 +1,41 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HelpRequestController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AdminController;
 
+// Pages publiques
+Route::get('/', function () {
+    return view('home');
+})->name('home');
 
-// Route  middleware quand j'aurais ajouté la page login
-// Route::middleware(['auth'])->group(function () {
-//     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+// Auth
+Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('login', [LoginController::class, 'login']);
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('register', [RegisterController::class, 'register']);
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+// Dashboard pour utilisateurs connectés (role:user)
+Route::middleware(['auth', 'role:user'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/help-requests', [HelpRequestController::class, 'index'])->name('help-requests.index');
+});
 
-Route::resource('requests', HelpRequestController::class)->only([
-    'show',
-    'edit',
-    'update',
-    'destroy'
-]);
+// Dashboard pour associations (role:association)
+Route::middleware(['auth', 'role:association'])->group(function () {
+    Route::get('/missions', [DashboardController::class, 'missions'])->name('missions');
+});
 
-Route::get('/login', function () {
-    return 'Page de login';
-})->name('login');
-Route::get('/register', function () {
-    return 'Page de register';
-})->name('register');
+// Dashboard admin
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+});
 
-// });
+// Mes actions, pages 'test' pour dashboard ou autres sans être connecté
+Route::get('/dashboard-test', [DashboardController::class, 'index']);
+Route::resource('requests', HelpRequestController::class);
