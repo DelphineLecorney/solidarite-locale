@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class HelpRequestController extends Controller
 {
+
     public function show(HelpRequest $request)
     {
         return view('requests.show', compact('request'));

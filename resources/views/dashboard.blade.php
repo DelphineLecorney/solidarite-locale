@@ -81,7 +81,6 @@
     </div>
 </form>
 
-
 <table class="table table-striped table-bordered table-hover">
     <thead class="table-dark">
         <tr>
@@ -91,6 +90,7 @@
             <th>Catégorie</th>
             <th>Adresse</th>
             <th>Date</th>
+            <th>Statut</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -110,6 +110,17 @@
             </td>
             <td>{{ $request->created_at->format('d/m/Y') }}</td>
             <td>
+                @php
+                    $badgeClass = match($request->status) {
+                        'pending' => 'bg-warning text-dark',
+                        'accepted' => 'bg-success',
+                        'done' => 'bg-danger',
+                        default => 'bg-secondary',
+                    };
+                @endphp
+                <span class="badge {{ $badgeClass }}">{{ ucfirst($request->status) }}</span>
+            </td>
+            <td>
                 <a href="{{ route('requests.show', $request->id) }}" class="btn btn-sm btn-info">Voir</a>
                 <a href="{{ route('requests.edit', $request->id) }}" class="btn btn-sm btn-warning">Modifier</a>
                 <form action="{{ route('requests.destroy', $request->id) }}" method="POST" class="d-inline">
@@ -121,9 +132,14 @@
         </tr>
         @empty
         <tr>
-            <td colspan="7" class="text-center">Aucune demande pour le moment</td>
+            <td colspan="8" class="text-center">Aucune demande pour le moment</td>
         </tr>
         @endforelse
     </tbody>
 </table>
+
+<!-- Pagination Bootstrap -->
+<div class="d-flex justify-content-center mt-4">
+    {{ $helpRequests->links('pagination::bootstrap-5') }}
+</div>
 @endsection

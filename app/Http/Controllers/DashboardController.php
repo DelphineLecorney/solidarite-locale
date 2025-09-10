@@ -10,7 +10,6 @@ use App\Models\HelpCategory;
 class DashboardController extends Controller
 {
     // Middleware futur pour sécuriser l'accès
-    // Seul les utilisateurs connectés pourront accéder plus tard
     // public function __construct() {
     //     $this->middleware('auth');
     // }
@@ -23,7 +22,9 @@ class DashboardController extends Controller
         $othersCount = 0;
 
         $categories = HelpCategory::all();
-        $query = HelpRequest::with(['user', 'category', 'address']);
+
+        $query = HelpRequest::with(['user', 'category', 'address'])->latest();
+
         if ($request->filled('category')) {
             $query->where('help_category_id', $request->category);
         }
@@ -32,13 +33,7 @@ class DashboardController extends Controller
             $query->where('status', $request->status);
         }
 
-        $helpRequests = $query->latest()->paginate(10);
-
-        // Dernières demandes avec relations préchargées
-        $helpRequests = HelpRequest::with(['user', 'category', 'address'])
-            ->latest()
-            ->take(10)
-            ->get();
+        $helpRequests = $query->paginate(5)->withQueryString();
 
         return view('dashboard', compact(
             'usersCount',
