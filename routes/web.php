@@ -32,8 +32,18 @@ Route::middleware(['auth', 'role:association'])->group(function () {
 });
 
 // Dashboard admin
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+
+    Route::get('/users', [AdminController::class, 'users'])->name('users');
+    Route::delete('/users/{user}', [AdminController::class, 'destroyUser'])->name('users.destroy');
+
+    Route::get('/missions', [AdminController::class, 'missions'])->name('missions');
+    Route::delete('/missions/{mission}', [AdminController::class, 'destroyMission'])->name('missions.destroy');
+
+    Route::get('/help-requests', [AdminController::class, 'helpRequests'])->name('helpRequests');
+    Route::delete('/help-requests/{helpRequest}', [AdminController::class, 'destroyHelpRequest'])->name('helpRequests.destroy');
 });
+
 
 Route::resource('requests', HelpRequestController::class);
