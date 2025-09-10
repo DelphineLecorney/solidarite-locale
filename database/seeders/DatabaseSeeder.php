@@ -21,5 +21,7 @@ class DatabaseSeeder extends Seeder
             HelpRequestSeeder::class,
             MissionSeeder::class,
         ]);
+
+        $this->call(AdminUserSeeder::class);
     }
 }

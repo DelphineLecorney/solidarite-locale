@@ -8,57 +8,40 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    /**
-     * Affiche le formulaire de connexion.
-     */
     public function showLoginForm()
     {
         return view('auth.login');
     }
 
-    /**
-     * Traite la connexion de l'utilisateur.
-     */
     public function login(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|string',
-        ]);
+        $credentials = $request->only('email', 'password');
 
-        $remember = $request->has('remember');
-
-        if (Auth::attempt($credentials, $remember)) {
+        if (Auth::attempt($credentials, $request->filled('remember'))) {
             $request->session()->regenerate();
 
-            // Redirection selon le rôle
+            // Redirection selon rôle
             $user = Auth::user();
-            if ($user->role === 'user') {
-                return redirect()->route('dashboard');
-            } elseif ($user->role === 'association') {
-                return redirect()->route('dashboard');
-            } elseif ($user->role === 'admin') {
+            if ($user->role === 'admin') {
                 return redirect()->route('admin.dashboard');
+            } elseif ($user->role === 'association') {
+                return redirect()->route('missions');
+            } else { // 'user'
+                return redirect()->route('dashboard');
             }
-
-            return redirect('/');
         }
 
         return back()->withErrors([
-            'email' => 'Identifiants incorrects.',
+            'email' => 'Identifiants invalides.',
         ])->onlyInput('email');
     }
 
-    /**
-     * Déconnecte l'utilisateur.
-     */
     public function logout(Request $request)
     {
         Auth::logout();
-
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect()->route('home');
     }
 }

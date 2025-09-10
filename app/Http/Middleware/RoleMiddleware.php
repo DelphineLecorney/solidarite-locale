@@ -9,17 +9,29 @@ use Illuminate\Support\Facades\Auth;
 class RoleMiddleware
 {
     /**
-     * Vérifie si l'utilisateur connecté a le rôle requis
+     * Vérifie le rôle de l'utilisateur connecté.
+     * L'admin a toujours accès à tout.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
-     * @param  string  $role  Rôle attendu : user, association, admin
+     * @param  string  $role
+     * @return mixed
      */
     public function handle(Request $request, Closure $next, string $role)
     {
         $user = Auth::user();
 
-        if (!$user || $user->role !== $role) {
+        if (!$user) {
+            // pas connecté
+            abort(403, 'Accès refusé');
+        }
+
+        // admin a toujours accès
+        if ($user->role === 'admin') {
+            return $next($request);
+        }
+
+        if ($user->role !== $role) {
             abort(403, 'Accès refusé');
         }
 
