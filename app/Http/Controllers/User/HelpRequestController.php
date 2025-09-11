@@ -35,7 +35,7 @@ class HelpRequestController extends Controller
 
     public function show(HelpRequest $helpRequest)
     {
-        $this->authorize('view', $helpRequest); // sécurité
+        // $this->authorize('view', $helpRequest);
         return view('user.helpRequests.show', compact('helpRequest'));
     }
 
