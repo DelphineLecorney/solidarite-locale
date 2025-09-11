@@ -6,25 +6,32 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\HelpRequest;
 use App\Models\HelpCategory;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    // Middleware futur pour sécuriser l'accès
-    // public function __construct() {
-    //     $this->middleware('auth');
-    // }
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     public function index(Request $request)
     {
+        $categories = HelpCategory::all();
         $usersCount = User::count();
         $requestsCount = HelpRequest::count();
-        $categoriesCount = HelpCategory::count();
+        $categoriesCount = $categories->count();
         $othersCount = 0;
 
-        $categories = HelpCategory::all();
-
+        // Requête principale
         $query = HelpRequest::with(['user', 'category', 'address'])->latest();
 
+        // Filtrer pour les utilisateurs non-admin
+        if (!Auth::user()->is_admin) {
+            $query->where('user_id', Auth::id());
+        }
+
+        // Filtres optionnels
         if ($request->filled('category')) {
             $query->where('help_category_id', $request->category);
         }
@@ -35,7 +42,10 @@ class DashboardController extends Controller
 
         $helpRequests = $query->paginate(5)->withQueryString();
 
-        return view('dashboard', compact(
+        // Choisir la vue selon le rôle
+        $view = Auth::user()->is_admin ? 'admin.dashboard' : 'user.dashboard';
+
+        return view($view, compact(
             'usersCount',
             'requestsCount',
             'categoriesCount',

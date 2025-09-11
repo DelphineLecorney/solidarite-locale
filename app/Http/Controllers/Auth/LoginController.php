@@ -27,7 +27,7 @@ class LoginController extends Controller
             } elseif ($user->role === 'association') {
                 return redirect()->route('missions');
             } else { // 'user'
-                return redirect()->route('dashboard');
+                return redirect()->route('user.dashboard');
             }
         }
 

@@ -1,23 +1,49 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\Mission;
 use App\Models\HelpRequest;
+use App\Models\User;
+use App\Models\HelpCategory;
+use App\Models\Mission;
+
+
 
 class AdminController extends Controller
 {
-    // Dashboard principal de l'admin
-    public function index()
-    {
-        $userCount = User::count();
-        $missionCount = Mission::count();
-        $helpRequestCount = HelpRequest::count();
 
-        return view('admin.dashboard', compact('userCount', 'missionCount', 'helpRequestCount'));
+    public function dashboard(Request $request)
+    {
+        $usersCount = User::count();
+        $requestsCount = HelpRequest::count();
+        $missionsCount = 0;
+        $othersCount = 0;
+
+        $query = HelpRequest::query()->latest();
+
+        if ($request->category) {
+            $query->where('category_id', $request->category);
+        }
+        if ($request->status) {
+            $query->where('status', $request->status);
+        }
+
+        $helpRequests = $query->paginate(10);
+
+        $categories = HelpCategory::all();
+
+        return view('admin.dashboard', compact(
+            'usersCount',
+            'requestsCount',
+            'helpRequests',
+            'missionsCount',
+            'othersCount',
+            'categories'
+        ));
     }
+
 
     // Liste des utilisateurs
     public function users()

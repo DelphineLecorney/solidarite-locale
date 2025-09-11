@@ -3,9 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\HelpRequestController;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\User\UserController;
+
+
+use App\Http\Controllers\Admin\HelpRequestController as AdminHelpRequestController;
+use App\Http\Controllers\User\HelpRequestController as UserHelpRequestController;
 
 // Pages publiques
 Route::get('/', function () {
@@ -21,29 +25,33 @@ Route::get('register', [RegisterController::class, 'showRegistrationForm'])->nam
 Route::post('register', [RegisterController::class, 'register']);
 
 // Dashboard utilisateurs
-Route::middleware(['auth', 'role:user'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/help-requests', [HelpRequestController::class, 'index'])->name('help-requests.index');
+Route::middleware(['auth', 'role:user'])->prefix('user')->name('user.')->group(function () {
+    Route::get('dashboard', [UserController::class, 'dashboard'])->name('dashboard');
+    Route::resource('help-requests', UserHelpRequestController::class);
 });
+
 
 // Dashboard associations
 Route::middleware(['auth', 'role:association'])->group(function () {
     Route::get('/missions', [DashboardController::class, 'missions'])->name('missions');
 });
 
-// Dashboard admin
+// Dashboard Admin
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+    Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 
-    Route::get('/users', [AdminController::class, 'users'])->name('users');
-    Route::delete('/users/{user}', [AdminController::class, 'destroyUser'])->name('users.destroy');
+    // Gestion des users
+    Route::get('/user', [AdminController::class, 'user'])->name('user');
+    Route::delete('/user/{user}', [AdminController::class, 'destroyUser'])->name('users.destroy');
 
+    // Gestion des missions
     Route::get('/missions', [AdminController::class, 'missions'])->name('missions');
     Route::delete('/missions/{mission}', [AdminController::class, 'destroyMission'])->name('missions.destroy');
 
-    Route::get('/help-requests', [AdminController::class, 'helpRequests'])->name('helpRequests');
-    Route::delete('/help-requests/{helpRequest}', [AdminController::class, 'destroyHelpRequest'])->name('helpRequests.destroy');
+    // Gestion des demandes d’aide
+    Route::resource('help-requests', AdminHelpRequestController::class);
 });
 
-
-Route::resource('requests', HelpRequestController::class);
+Route::fallback(function () {
+    return redirect()->route('home');
+});
