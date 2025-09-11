@@ -47,7 +47,8 @@ class HelpRequestController extends Controller
 
     public function update(Request $request, HelpRequest $helpRequest)
     {
-        $this->authorize('update', $helpRequest);
+        //$this->authorize('update', $helpRequest); permet d'accepter une demande,
+        // mais ne la retire pas de la liste A CORRIGER
 
         $data = $request->validate([
             'title' => 'required|string|max:255',
