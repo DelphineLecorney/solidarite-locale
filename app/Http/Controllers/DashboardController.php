@@ -40,7 +40,10 @@ class DashboardController extends Controller
             $query->where('status', $request->status);
         }
 
-        $helpRequests = $query->paginate(5)->withQueryString();
+        $helpRequests = HelpRequest::with(['user', 'category', 'address'])
+            ->latest()
+            ->paginate(10);
+
 
         // Choisir la vue selon le rôle
         $view = Auth::user()->is_admin ? 'admin.dashboard' : 'user.dashboard';

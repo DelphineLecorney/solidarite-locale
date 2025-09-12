@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\HelpRequest;
+use App\Models\HelpCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,26 +18,33 @@ class HelpRequestController extends Controller
 
     public function create()
     {
-        return view('user.helpRequests.create');
+        $categories = HelpCategory::all();
+        return view('user.helpRequests.create', compact('categories'));
     }
+
 
     public function store(Request $request)
     {
-        $data = $request->validate([
+        $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
+            'category_id' => 'required|exists:help_categories,id',
         ]);
+        $validated['user_id'] = Auth::id();
 
-        $data['user_id'] = Auth::id();
-        HelpRequest::create($data);
 
-        return redirect()->route('user.help-requests.index')->with('success', 'Demande créée avec succès');
+
+        HelpRequest::create($validated);
+
+        return redirect()->route('user.help-requests.index')
+            ->with('success', 'Demande créée avec succès');
     }
+
 
     public function show(HelpRequest $helpRequest)
     {
         // $this->authorize('view', $helpRequest);
-        return view('user.helpRequests.show', compact('helpRequest'));
+        return view('user.help-requests.show', compact('helpRequest'));
     }
 
     public function edit(HelpRequest $helpRequest)
@@ -45,20 +53,19 @@ class HelpRequestController extends Controller
         return view('user.helpRequests.edit', compact('helpRequest'));
     }
 
+    //$this->authorize('update', $helpRequest); permet d'accepter une demande,
+    // mais ne la retire pas de la liste A CORRIGER
     public function update(Request $request, HelpRequest $helpRequest)
     {
-        //$this->authorize('update', $helpRequest); permet d'accepter une demande,
-        // mais ne la retire pas de la liste A CORRIGER
+        if ($helpRequest->user_id !== Auth::id()) {
+            abort(403);
+        }
 
-        $data = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-        ]);
+        $helpRequest->update($request->all());
 
-        $helpRequest->update($data);
-
-        return redirect()->route('user.help-requests.index')->with('success', 'Demande mise à jour');
+        return redirect()->route('user.help-requests.index');
     }
+
 
     public function destroy(HelpRequest $helpRequest)
     {

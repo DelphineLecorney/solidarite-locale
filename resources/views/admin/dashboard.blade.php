@@ -90,7 +90,10 @@
                     <td>{{ $request->title }}</td>
                     <td>{{ $request->user->name }}</td>
                     <td>{{ $request->category->name }}</td>
-                    <td>{{ $request->address->street }}, {{ $request->address->city }}</td>
+                    <td>
+    {{ $request->address?->street ?? 'Adresse non renseignée' }},
+    {{ $request->address?->city ?? '' }}
+</td>
                     <td>{{ $request->created_at->format('d/m/Y') }}</td>
                     <td>
                         @php
