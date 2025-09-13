@@ -23,7 +23,7 @@ class RegisterController extends Controller
         return match ($user->role) {
             'admin' => '/admin/dashboard',
             'association' => '/missions',
-            'user' => '/dashboard',
+            'user' => '/user/dashboard',
             default => '/',
         };
     }
@@ -46,6 +46,6 @@ class RegisterController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('dashboard');
+        return redirect()->route($user->role . '.dashboard');
     }
 }

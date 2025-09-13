@@ -1,3 +1,6 @@
+@extends('layouts.app')
+
+@section('content')
 <form action="{{ route('user.help-requests.store') }}" method="POST">
     @csrf
     <div class="mb-3">
@@ -22,3 +25,4 @@
     <button type="submit" class="btn btn-success">Créer</button>
     <a href="{{ route('user.help-requests.index') }}" class="btn btn-secondary">Annuler</a>
 </form>
+@endsection

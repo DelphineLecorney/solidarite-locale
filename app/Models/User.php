@@ -52,10 +52,11 @@ class User extends Authenticatable
         ];
     }
 
-    public function address()
+    public function addresses()
     {
-        return $this->belongsTo(Address::class);
+        return $this->hasMany(Address::class);
     }
+
 
     public function helpRequests()
     {
