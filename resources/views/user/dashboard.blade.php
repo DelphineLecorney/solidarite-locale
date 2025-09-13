@@ -32,6 +32,7 @@
                 <th>Titre</th>
                 <th>Utilisateur</th>
                 <th>Catégorie</th>
+                <th>Description</th>
                 <th>Adresse</th>
                 <th>Date</th>
                 <th>Statut</th>
@@ -45,6 +46,7 @@
                     <td>{{ $request->title }}</td>
                     <td>{{ $request->user->name }}</td>
                     <td>{{ $request->category->name }}</td>
+                    <td>{{ $request->description}}</td>
                     <td>
     {{ $request->address?->street ?? 'Adresse non renseignée' }},
     {{ $request->address?->postcode ?? '' }}
