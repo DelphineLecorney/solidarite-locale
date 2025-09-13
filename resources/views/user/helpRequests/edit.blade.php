@@ -5,7 +5,8 @@
     <h1>Modifier la demande</h1>
 
     <form action="{{ route('user.help-requests.update', $helpRequest) }}" method="POST">
-        @csrf @method('PUT')
+        @csrf
+        @method('PUT')
 
         <div class="mb-3">
             <label for="title">Titre</label>

@@ -90,22 +90,28 @@ class HelpRequestController extends Controller
 
     public function edit(HelpRequest $helpRequest)
     {
-        $this->authorize('update', $helpRequest); // sécurité
-        return view('user.helpRequests.edit', compact('helpRequest'));
-    }
-
-    //$this->authorize('update', $helpRequest); permet d'accepter une demande,
-    // mais ne la retire pas de la liste A CORRIGER
-    public function update(Request $request, HelpRequest $helpRequest)
-    {
-        if ($helpRequest->user_id !== Auth::id()) {
+        // Vérifie que l'utilisateur est bien l'auteur
+        if ($helpRequest->user_id != Auth::id()) {
             abort(403);
         }
 
-        $helpRequest->update($request->all());
-
-        return redirect()->route('user.help-requests.index');
+        return view('user.helpRequests.edit', compact('helpRequest'));
     }
+
+    public function update(Request $request, HelpRequest $helpRequest)
+    {
+        // Vérifie que l'utilisateur est bien l'auteur
+        if ($helpRequest->user_id != Auth::id()) {
+            abort(403);
+        }
+
+        // Mise à jour sécurisée
+        $helpRequest->update($request->only(['title', 'description']));
+
+        return redirect()->route('user.help-requests.index')
+            ->with('success', 'Demande mise à jour avec succès !');
+    }
+
 
 
     public function destroy(HelpRequest $helpRequest)
