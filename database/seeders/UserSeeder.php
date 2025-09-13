@@ -19,7 +19,9 @@ class UserSeeder extends Seeder
             'email' => 'jean@example.com',
             'password' => bcrypt('secret123'),
             'phone' => '0470123456',
-            'address_id' => $addresses->first()->id
+            'role' => 'user',
+            'address_id' => $addresses->first()->id,
+
         ]);
 
         User::create([
@@ -27,6 +29,7 @@ class UserSeeder extends Seeder
             'email' => 'marie@example.com',
             'password' => bcrypt('secret'),
             'phone' => '0489001122',
+            'role' => 'user',
             'address_id' => $addresses->last()->id
         ]);
     }
