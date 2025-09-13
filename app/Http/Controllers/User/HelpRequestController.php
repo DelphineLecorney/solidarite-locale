@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\HelpRequest;
 use App\Models\HelpCategory;
+use App\Models\Address;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,27 +20,67 @@ class HelpRequestController extends Controller
     public function create()
     {
         $categories = HelpCategory::all();
-        return view('user.helpRequests.create', compact('categories'));
+        $addresses = Address::all();
+
+        return view('user.helpRequests.create', compact('categories', 'addresses'));
     }
 
+
+
+    // public function store(Request $request)
+    // {
+    //     $validated = $request->validate([
+    //         'title' => 'required|string|max:255',
+    //         'description' => 'required|string',
+    //         'category_id' => 'required|exists:help_categories,id',
+    //     ]);
+    //     $validated['user_id'] = Auth::id();
+
+
+
+    //     HelpRequest::create($validated);
+
+    //     return redirect()->route('user.help-requests.index')
+    //         ->with('success', 'Demande créée avec succès');
+    // }
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'category_id' => 'required|exists:help_categories,id',
+            'address_id' => 'nullable|exists:addresses,id',
+            'street' => 'nullable|string',
+            'city' => 'nullable|string',
+            'postcode' => 'nullable|string',
         ]);
-        $validated['user_id'] = Auth::id();
 
+        if ($request->filled('address_id')) {
+            $addressId = $request->address_id;
+        } elseif ($request->filled(['street', 'city', 'postcode'])) {
+            $address = Address::create([
+                'street' => $request->street,
+                'city' => $request->city,
+                'postcode' => $request->postcode,
+            ]);
+            $addressId = $address->id;
+        } else {
+            return back()->withErrors('Vous devez sélectionner ou créer une adresse.');
+        }
 
-
-        HelpRequest::create($validated);
+        HelpRequest::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'category_id' => $request->category_id,
+            'user_id' => Auth::id(),
+            'address_id' => $addressId,
+            'status' => 'pending',
+        ]);
 
         return redirect()->route('user.help-requests.index')
-            ->with('success', 'Demande créée avec succès');
+            ->with('success', 'Demande créée avec succès !');
     }
-
 
     public function show(HelpRequest $helpRequest)
     {

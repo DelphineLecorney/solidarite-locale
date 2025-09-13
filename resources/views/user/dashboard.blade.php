@@ -47,7 +47,9 @@
                     <td>{{ $request->category->name }}</td>
                     <td>
     {{ $request->address?->street ?? 'Adresse non renseignée' }},
+    {{ $request->address?->postcode ?? '' }}
     {{ $request->address?->city ?? '' }}
+
 </td>
 
                     <td>{{ $request->created_at->format('d/m/Y') }}</td>
