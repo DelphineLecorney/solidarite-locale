@@ -7,4 +7,5 @@
 
     <a href="{{ route('user.help-requests.index') }}" class="btn btn-secondary">Retour</a>
 </div>
+
 @endsection

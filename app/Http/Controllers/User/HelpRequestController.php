@@ -25,25 +25,6 @@ class HelpRequestController extends Controller
         return view('user.helpRequests.create', compact('categories', 'addresses'));
     }
 
-
-
-    // public function store(Request $request)
-    // {
-    //     $validated = $request->validate([
-    //         'title' => 'required|string|max:255',
-    //         'description' => 'required|string',
-    //         'category_id' => 'required|exists:help_categories,id',
-    //     ]);
-    //     $validated['user_id'] = Auth::id();
-
-
-
-    //     HelpRequest::create($validated);
-
-    //     return redirect()->route('user.help-requests.index')
-    //         ->with('success', 'Demande créée avec succès');
-    // }
-
     public function store(Request $request)
     {
         $request->validate([
@@ -112,13 +93,15 @@ class HelpRequestController extends Controller
             ->with('success', 'Demande mise à jour avec succès !');
     }
 
-
-
     public function destroy(HelpRequest $helpRequest)
     {
-        $this->authorize('delete', $helpRequest);
+        if ($helpRequest->user_id != Auth::id()) {
+            abort(403);
+        }
+
         $helpRequest->delete();
 
-        return redirect()->route('user.help-requests.index')->with('success', 'Demande supprimée');
+        return redirect()->route('user.help-requests.index')
+            ->with('success', 'Demande supprimée avec succès !');
     }
 }
