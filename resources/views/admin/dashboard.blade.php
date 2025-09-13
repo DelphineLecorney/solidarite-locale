@@ -77,6 +77,7 @@
                 <th>Titre</th>
                 <th>Utilisateur</th>
                 <th>Catégorie</th>
+                <th>Description</th>
                 <th>Adresse</th>
                 <th>Date</th>
                 <th>Statut</th>
@@ -90,9 +91,10 @@
                     <td>{{ $request->title }}</td>
                     <td>{{ $request->user->name }}</td>
                     <td>{{ $request->category->name }}</td>
+                    <td>{{ $request->description}}</td>
                     <td>
     {{ $request->address?->street ?? 'Adresse non renseignée' }},
-    {{ $request->address?->city ?? '' }}
+    {{ $request->address?->postcode ?? '' }} {{ $request->address?->city ?? '' }}
 </td>
                     <td>{{ $request->created_at->format('d/m/Y') }}</td>
                     <td>
@@ -109,7 +111,7 @@
                     <td>
                         <a href="{{ route('admin.help-requests.show', $request->id) }}" class="btn btn-sm btn-info">Voir</a>
                         <a href="{{ route('admin.help-requests.edit', $request->id) }}" class="btn btn-sm btn-warning">Modifier</a>
-                        <form action="{{ route('admin.help-requests.destroy', $request->id) }}" method="POST" class="d-inline">
+                        <form action="{{ route('admin.help-requests.destroy', $request) }}" method="POST" class="d-inline">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-sm btn-danger" onclick="return confirm('Supprimer cette demande ?')">Supprimer</button>
