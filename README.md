@@ -33,10 +33,10 @@ Valorisation du bénévolat via suivi d'heures, attestations PDF et tableau de b
 ---
 
 ### Page d’accueil
-![Home Page](https://github.com/DelphineLecorney/solidarite-locale/blob/main/public/images/home.png)
+![Home Page](https://github.com/DelphineLecorney/solidarite-locale/blob/main/public/images/Home.png)
 
 ### Dashboard (connecté)
-![Dashboard](https://github.com/DelphineLecorney/solidarite-locale/blob/main/public/images/dashboard.png)
+![Dashboard](https://github.com/DelphineLecorney/solidarite-locale/blob/main/public/images/Dashboard_admin.png)
 
 ---
 
