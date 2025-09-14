@@ -5,7 +5,7 @@
     <h1>{{ $helpRequest->title }}</h1>
     <p>{{ $helpRequest->description }}</p>
 
-    <a href="{{ route('user.dashboard') }}" class="btn btn-secondary">Retour</a>
+    <a href="{{ route('user.help-requests.index') }}" class="btn btn-secondary">Retour</a>
 </div>
 
 @endsection

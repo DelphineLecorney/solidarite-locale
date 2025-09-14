@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<h1 class="mb-4">Mon Tableau de bord</h1>
+<h1 class="mb-4">Tableau de bord</h1>
 
 <div class="row mb-5">
     <!-- Mes demandes -->

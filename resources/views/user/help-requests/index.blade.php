@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<h1 class="mb-4">Mon Tableau de bord</h1>
 <div class="row mb-5">
     <!-- Retour au dashboard -->
     <div class="col-md-4">
