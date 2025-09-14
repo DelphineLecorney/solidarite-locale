@@ -18,68 +18,70 @@
 
             <div class="col-md-4 mb-4">
                 <div class="card shadow-sm h-100">
-                    <img src="{{ asset('images/Captured180905.png') }}" class="card-img-top"
-                        alt="Dashboard Suivi des demandes">
                     <div class="card-body">
                         <h5 class="card-title">Dashboard User</h5>
                         <p class="card-text">Visualisez facilement les demandes d’aide.</p>
                     </div>
+                    <img src="{{ asset('images/Dashboard_user.png') }}" class="card-img-top"
+                        alt="Dashboard Suivi des demandes">
                 </div>
             </div>
+
             <div class="col-md-4 mb-4">
                 <div class="card shadow-sm h-100">
-                    <img src="{{ asset('images/Captured180905.png') }}" class="card-img-top"
-                        alt="Dashboard Suivi des demandes">
                     <div class="card-body">
                         <h5 class="card-title">Dashboard Admin</h5>
                         <p class="card-text">Visualisez facilement les demandes d’aide.</p>
                     </div>
+                    <img src="{{ asset('images/Dashboard_admin.png') }}" class="card-img-top"
+                        alt="Dashboard Suivi des demandes">
                 </div>
             </div>
 
-                <div class="row mb-5">
-                    <!-- Nombre d'utilisateurs -->
-                    <div class="col-md-4 mb-4">
-                        <div class="card shadow-sm h-100">
-                            <div class="card-body d-flex align-items-center">
-                                <i class="bi bi-people-fill fs-1 text-primary me-3"></i>
-                                <div>
-                                    <h5 class="card-title">Utilisateurs</h5>
-                                    <p class="card-text fs-2">{{ $usersCount }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Nombre de demandes d'aide -->
-                    <div class="col-md-4 mb-4">
-                        <div class="card shadow-sm h-100">
-                            <div class="card-body d-flex align-items-center">
-                                <i class="bi bi-cart-fill fs-1 text-success me-3"></i>
-                                <div>
-                                    <h5 class="card-title">Demandes d'aide</h5>
-                                    <p class="card-text fs-2">{{ $requestsCount }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Nombre de catégories -->
-                    <div class="col-md-4 mb-4">
-                        <div class="card shadow-sm h-100">
-                            <div class="card-body d-flex align-items-center">
-                                <i class="bi bi-tags-fill fs-1 text-warning me-3"></i>
-                                <div>
-                                    <h5 class="card-title">Catégories</h5>
-                                    <p class="card-text fs-2">{{ $categoriesCount }}</p>
-                                </div>
+            <div class="row mb-5">
+                <!-- Nombre d'utilisateurs -->
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body d-flex align-items-center">
+                            <i class="bi bi-people-fill fs-1 text-primary me-3"></i>
+                            <div>
+                                <h5 class="card-title">Utilisateurs</h5>
+                                <p class="card-text fs-2">{{ $usersCount }}</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- Nombre de demandes d'aide -->
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body d-flex align-items-center">
+                            <i class="bi bi-cart-fill fs-1 text-success me-3"></i>
+                            <div>
+                                <h5 class="card-title">Demandes d'aide</h5>
+                                <p class="card-text fs-2">{{ $requestsCount }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nombre de catégories -->
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body d-flex align-items-center">
+                            <i class="bi bi-tags-fill fs-1 text-warning me-3"></i>
+                            <div>
+                                <h5 class="card-title">Catégories</h5>
+                                <p class="card-text fs-2">{{ $categoriesCount }}</p>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Autres stats -->
-            <div class="col-md-3">
+            {{-- <div class="col-md-3">
                 <div class="card shadow-sm mb-3 border-0">
                     <div class="card-body d-flex align-items-center">
                         <i class="bi bi-bar-chart-fill fs-1 text-danger me-3"></i>
@@ -90,11 +92,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
+            </div> --}}
         </div>
     </div>
-
 
     <div class="text-center my-5">
         <h2>Notre mission</h2>
@@ -103,5 +103,5 @@
         </p>
     </div>
 
-</div>
+    </div>
 @endsection
