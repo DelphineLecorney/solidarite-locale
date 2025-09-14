@@ -15,3 +15,48 @@
 body {
     background-color: #93a2b1;
 }
+
+.table th, .table td {
+    vertical-align: middle;
+}
+
+.table th.date-col,
+.table td.date-col {
+    width: 100px;
+}
+
+.table th.title-col,
+.table td.title-col {
+    width: 150px;
+}
+
+.table th.status-col,
+.table td.status-col {
+    width: 120px;
+}
+
+.table th.user-col,
+.table td.user-col {
+    width: 150px;
+}
+
+.table th.address-col,
+.table td.address-col {
+    width: 250px;
+}
+
+.table th.category-col,
+.table td.category-col {
+    width: 150px;
+}
+
+.table th.desc-col,
+.table td.desc-col {
+    width: 250px;
+}
+
+.table th.actions-col,
+.table td.actions-col {
+    width: 220px;
+    white-space: nowrap;
+}
