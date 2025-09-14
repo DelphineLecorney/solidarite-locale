@@ -14,7 +14,7 @@ class HelpRequestController extends Controller
     public function index()
     {
         $helpRequests = HelpRequest::where('user_id', Auth::id())->get();
-        return view('user.helpRequests.index', compact('helpRequests'));
+        return view('user.help-requests.index', compact('helpRequests'));
     }
 
     public function create()
@@ -22,7 +22,7 @@ class HelpRequestController extends Controller
         $categories = HelpCategory::all();
         $addresses = Address::all();
 
-        return view('user.helpRequests.create', compact('categories', 'addresses'));
+        return view('user.help-requests.create', compact('categories', 'addresses'));
     }
 
     public function store(Request $request)
@@ -76,7 +76,7 @@ class HelpRequestController extends Controller
             abort(403);
         }
 
-        return view('user.helpRequests.edit', compact('helpRequest'));
+        return view('user.help-requests.edit', compact('helpRequest'));
     }
 
     public function update(Request $request, HelpRequest $helpRequest)
@@ -119,5 +119,22 @@ class HelpRequestController extends Controller
         ]);
 
         return redirect()->route('user.dashboard')->with('success', 'Demande acceptée !');
+    }
+
+    public function done(HelpRequest $helpRequest)
+    {
+        if ($helpRequest->accepted_by_user_id !== Auth::id()) {
+            return redirect()->back()->with('error', 'Vous ne pouvez pas terminer cette demande.');
+        }
+
+        if ($helpRequest->status !== 'accepted') {
+            return redirect()->back()->with('error', 'Seules les demandes acceptées peuvent être terminées.');
+        }
+
+        $helpRequest->update([
+            'status' => 'done',
+        ]);
+
+        return redirect()->route('user.dashboard')->with('success', 'Demande marquée comme terminée !');
     }
 }

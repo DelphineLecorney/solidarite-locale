@@ -98,6 +98,12 @@
                             @csrf
                             <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('Accepter cette demande ?')">Accepter</button>
                         </form>
+                                            <form action="{{ route('user.help-requests.done', $request->id) }}" method="POST" class="d-inline">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Marquer comme terminée ?')">
+                            Terminer
+                        </button>
+                    </form>
                     @endif
                 </td>
             </tr>

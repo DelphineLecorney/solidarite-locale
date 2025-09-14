@@ -28,9 +28,10 @@ Route::post('register', [RegisterController::class, 'register']);
 Route::middleware(['auth', 'role:user'])->prefix('user')->name('user.')->group(function () {
     Route::get('dashboard', [UserController::class, 'dashboard'])->name('dashboard');
     Route::resource('help-requests', UserHelpRequestController::class);
-
     Route::post('help-requests/{helpRequest}/accept', [UserHelpRequestController::class, 'accept'])
         ->name('help-requests.accept');
+    Route::post('help-requests/{helpRequest}/done', [UserHelpRequestController::class, 'done'])
+        ->name('help-requests.done');
 });
 
 

@@ -11,17 +11,17 @@ class HelpRequestController extends Controller
     public function index()
     {
         $helpRequests = HelpRequest::all();
-        return view('admin.helpRequests.index', compact('helpRequests'));
+        return view('admin.help-requests.index', compact('helpRequests'));
     }
 
     public function show(HelpRequest $helpRequest)
     {
-        return view('admin.helpRequests.show', compact('helpRequest'));
+        return view('admin.help-requests.show', compact('helpRequest'));
     }
 
     public function edit(HelpRequest $helpRequest)
     {
-        return view('admin.helpRequests.edit', compact('helpRequest'));
+        return view('admin.help-requests.edit', compact('helpRequest'));
     }
 
     public function update(Request $request, HelpRequest $helpRequest)
