@@ -11,11 +11,23 @@ use Illuminate\Support\Facades\Auth;
 
 class HelpRequestController extends Controller
 {
+
     public function index()
     {
-        $helpRequests = HelpRequest::where('user_id', Auth::id())->get();
-        return view('user.help-requests.index', compact('helpRequests'));
+        $userId = Auth::id();
+
+        $helpRequests = HelpRequest::where('user_id', $userId)
+            ->with(['category', 'address'])
+            ->latest()
+            ->get();
+
+        $acceptedRequests = HelpRequest::where('accepted_by_user_id', $userId)
+            ->with(['user', 'category', 'address'])
+            ->get();
+
+        return view('user.help-requests.index', compact('helpRequests', 'acceptedRequests'));
     }
+
 
     public function create()
     {

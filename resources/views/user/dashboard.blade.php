@@ -20,26 +20,6 @@
     </div>
 </div>
 
-
-
-    <!-- Mes demandes acceptées -->
-    @if($acceptedRequests->isNotEmpty())
-        <div class="col-md-4">
-            <div class="card shadow-sm mb-3 border-0">
-                <div class="card-body d-flex align-items-center">
-                    <i class="bi bi-check2-circle fs-1 text-primary me-3"></i>
-                    <div>
-                        <h5 class="card-title">Mes demandes acceptées</h5>
-                        <p class="card-text fs-2">{{ $acceptedRequests->count() }}</p>
-                        <a href="{{ route('user.help-requests.index') }}" class="btn btn-sm btn-outline-primary mt-2">
-                            Voir toutes
-
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endif
 </div>
 
 <!-- Tableau principal -->
