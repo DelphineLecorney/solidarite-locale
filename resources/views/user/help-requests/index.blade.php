@@ -61,6 +61,7 @@
             <tr>
                 <th>Titre</th>
                 <th>Description</th>
+                <th>Utilisateur</th>
                 <th>Statut</th>
                 <th>Actions</th>
             </tr>
@@ -70,6 +71,7 @@
                 <tr>
                     <td>{{ $helpRequest->title }}</td>
                     <td>{{ Str::limit($helpRequest->description, 50) }}</td>
+                    <td>{{ $helpRequest->user->name ?? 'N/A' }}</td>
                     <td>{{ ucfirst($helpRequest->status) }}</td>
                     <td>
                         <a href="{{ route('user.help-requests.show', $helpRequest) }}" class="btn btn-info btn-sm">Voir</a>
@@ -101,6 +103,7 @@
             <tr>
                 <th>Titre</th>
                 <th>Description</th>
+                <th>Utilisateur</th>
                 <th>Statut</th>
                 <th>Actions</th>
             </tr>
@@ -110,15 +113,27 @@
                 <tr>
                     <td>{{ $acceptedRequest->title }}</td>
                     <td>{{ Str::limit($acceptedRequest->description, 50) }}</td>
+                    <td>{{ $helpRequest->user->name ?? 'N/A' }}</td>
                     <td>{{ ucfirst($acceptedRequest->status) }}</td>
                     <td>
                         <a href="{{ route('user.help-requests.show', $acceptedRequest) }}" class="btn btn-info btn-sm">Voir</a>
                         <a href="{{ route('user.help-requests.edit', $acceptedRequest) }}" class="btn btn-warning btn-sm">Modifier</a>
+@if($acceptedRequest->status === 'accepted' && $acceptedRequest->accepted_by_user_id === auth()->id())
+    <form action="{{ route('user.help-requests.done', $acceptedRequest->id) }}" method="POST" class="d-inline">
+        @csrf
+        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Marquer cette demande comme terminée ?')">
+            Terminer
+        </button>
+    </form>
+@endif
+
+
                         <form action="{{ route('user.help-requests.destroy', $acceptedRequest) }}" method="POST" class="d-inline">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Supprimer cette demande ?')">Supprimer</button>
                         </form>
+
                     </td>
                 </tr>
             @empty

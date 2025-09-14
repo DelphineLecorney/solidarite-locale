@@ -1,10 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
+
+    <div class="col-md-4">
+        <div class="card shadow-sm mb-3 border-0">
+            <div class="card-body d-flex align-items-center">
+                <i class="bi bi-house-fill fs-1 text-secondary me-3"></i>
+                <div>
+                    <h5 class="card-title">Retour au dashboard</h5>
+                    <a href="{{ route('admin.dashboard') }}" class="btn btn-sm btn-outline-secondary mt-2">
+                        Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 <div class="container">
     <h1>Demandes d’aide</h1>
-
-    <a href="{{ route('admin.help-requests.create') }}" class="btn btn-primary mb-3">Nouvelle demande</a>
 
     @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
@@ -16,6 +28,7 @@
                 <th>Titre</th>
                 <th>Description</th>
                 <th>Utilisateur</th>
+                <th>Statut</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -25,6 +38,7 @@
                     <td>{{ $helpRequest->title }}</td>
                     <td>{{ Str::limit($helpRequest->description, 50) }}</td>
                     <td>{{ $helpRequest->user->name ?? 'N/A' }}</td>
+                    <td>{{ ucfirst($helpRequest->status) }}</td>
                     <td>
                         <!-- Voir -->
                         <a href="{{ route('admin.help-requests.show', $helpRequest) }}" class="btn btn-info btn-sm">Voir</a>
