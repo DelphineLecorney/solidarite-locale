@@ -6,15 +6,12 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\User\UserController;
-
-
 use App\Http\Controllers\Admin\HelpRequestController as AdminHelpRequestController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\User\HelpRequestController as UserHelpRequestController;
 
 // Pages publiques
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+Route::get('/', [HomeController::class, 'home'])->name('home');
 
 // Auth
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');

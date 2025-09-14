@@ -2,12 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\HelpCategory;
+use App\Models\HelpRequest;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function home()
     {
-        return view('home');
+        // Statistiques globales
+        $categories = HelpCategory::all();
+        $usersCount = User::count();
+        $requestsCount = HelpRequest::count();
+        $categoriesCount = $categories->count();
+        $othersCount = 0;
+
+        return view('home', compact('usersCount', 'requestsCount', 'categoriesCount', 'othersCount'));
     }
 }
