@@ -1,10 +1,46 @@
 @extends('layouts.app')
 
 @section('content')
+
+<div class="row mb-5">
+    <!-- Retour au dashboard -->
+    <div class="col-md-4">
+        <div class="card shadow-sm mb-3 border-0">
+            <div class="card-body d-flex align-items-center">
+                <i class="bi bi-house-fill fs-1 text-secondary me-3"></i>
+                <div>
+                    <h5 class="card-title">Retour au dashboard</h5>
+                    <a href="{{ route('user.dashboard') }}" class="btn btn-sm btn-outline-secondary mt-2">
+                        Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Créer une demande -->
+    <div class="col-md-4">
+        <div class="card shadow-sm mb-3 border-0">
+            <div class="card-body d-flex align-items-center">
+                <i class="bi bi-plus-circle-fill fs-1 text-success me-3"></i>
+                <div>
+                    <h5 class="card-title">Créer une demande</h5>
+                    <a href="{{ route('user.help-requests.create') }}" class="btn btn-sm btn-outline-success mt-2">
+                        Créer
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
 <div class="container">
     <h1>Mes demandes d'aide</h1>
 
-    <a href="{{ route('user.help-requests.create') }}" class="btn btn-primary mb-3">Nouvelle demande</a>
+    {{-- <a href="{{ route('user.help-requests.create') }}" class="btn btn-primary mb-3">Nouvelle demande</a> --}}
+
 
     @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>

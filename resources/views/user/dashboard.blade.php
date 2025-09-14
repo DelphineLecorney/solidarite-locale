@@ -5,20 +5,21 @@
 
 <div class="row mb-5">
     <!-- Mes demandes -->
-    <div class="col-md-4">
-        <div class="card shadow-sm mb-3 border-0">
-            <div class="card-body d-flex align-items-center">
-                <i class="bi bi-cart-fill fs-1 text-success me-3"></i>
-                <div>
-                    <h5 class="card-title">Mes demandes</h5>
-                    <p class="card-text fs-2">{{ $myRequestsCount ?? 0 }}</p>
-                    <a href="{{ route('user.help-requests.create') }}" class="btn btn-sm btn-outline-success mt-2">
-                        Créer une demande
-                    </a>
-                </div>
+<div class="col-md-4">
+    <div class="card shadow-sm mb-3 border-0">
+        <div class="card-body d-flex align-items-center">
+            <i class="bi bi-gear-fill fs-1 text-success me-3"></i>
+            <div>
+                <h5 class="card-title">Gérer mes demandes</h5>
+                <p class="card-text fs-2">{{ $myRequestsCount ?? 0 }}</p>
+                <a href="{{ route('user.help-requests.index') }}" class="btn btn-sm btn-outline-success mt-2">
+                    Gérer
+                </a>
             </div>
         </div>
     </div>
+</div>
+
 
 
     <!-- Mes demandes acceptées -->
