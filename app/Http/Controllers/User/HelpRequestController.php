@@ -43,11 +43,12 @@ class HelpRequestController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'category_id' => 'required|exists:help_categories,id',
-            'address_id' => 'nullable|exists:addresses,id',
-            'street' => 'nullable|string',
-            'city' => 'nullable|string',
-            'postcode' => 'nullable|string',
+            'street' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'postcode' => ['required', 'regex:/^[0-9]{4}$/'],
         ]);
+
+
 
         if ($request->filled('address_id')) {
             $addressId = $request->address_id;

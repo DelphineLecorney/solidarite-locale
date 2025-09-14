@@ -162,7 +162,7 @@
                             @if ($acceptedRequest->status === 'accepted' && $acceptedRequest->accepted_by_user_id === auth()->id())
                                 <form action="{{ route('user.help-requests.done', $acceptedRequest->id) }}" method="POST" class="d-inline">
                                     @csrf
-                                    <button type="submit" class="btn btn-sm btn-danger"
+                                    <button type="submit" class="btn btn-sm btn-success"
                                         onclick="return confirm('Marquer cette demande comme terminée ?')">
                                         Terminer
                                     </button>
