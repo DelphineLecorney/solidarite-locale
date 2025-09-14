@@ -37,6 +37,16 @@
                         alt="Dashboard Suivi des demandes">
                 </div>
             </div>
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Create</h5>
+                        <p class="card-text">Créer une demande d’aide.</p>
+                    </div>
+                    <img src="{{ asset('images/Create.png') }}" class="card-img-top"
+                        alt="Dashboard Suivi des demandes">
+                </div>
+            </div>
 
             <div class="row mb-5">
                 <!-- Nombre d'utilisateurs -->
@@ -45,7 +55,7 @@
                         <div class="card-body d-flex align-items-center">
                             <i class="bi bi-people-fill fs-1 text-primary me-3"></i>
                             <div>
-                                <h5 class="card-title">Utilisateurs</h5>
+                                <h5 class="card-title">Nombre d'utilisateurs</h5>
                                 <p class="card-text fs-2">{{ $usersCount }}</p>
                             </div>
                         </div>
@@ -58,7 +68,7 @@
                         <div class="card-body d-flex align-items-center">
                             <i class="bi bi-cart-fill fs-1 text-success me-3"></i>
                             <div>
-                                <h5 class="card-title">Demandes d'aide</h5>
+                                <h5 class="card-title">Nombre de demandes d'aide</h5>
                                 <p class="card-text fs-2">{{ $requestsCount }}</p>
                             </div>
                         </div>
@@ -71,10 +81,10 @@
                         <div class="card-body d-flex align-items-center">
                             <i class="bi bi-tags-fill fs-1 text-warning me-3"></i>
                             <div>
-                                <h5 class="card-title">Catégories</h5>
+                                <h5 class="card-title">Nombre de catégories</h5>
                                 <p class="card-text fs-2">{{ $categoriesCount }}</p>
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
