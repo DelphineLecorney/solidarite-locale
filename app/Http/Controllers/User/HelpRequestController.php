@@ -104,4 +104,20 @@ class HelpRequestController extends Controller
         return redirect()->route('user.help-requests.index')
             ->with('success', 'Demande supprimée avec succès !');
     }
+
+    public function accept(HelpRequest $helpRequest)
+    {
+
+        if ($helpRequest->status !== 'pending') {
+            return redirect()->back()->with('error', 'Cette demande ne peut pas être acceptée.');
+        }
+
+        $helpRequest->update([
+            'status' => 'accepted',
+            'accepted_by_user_id' => Auth::id(),
+
+        ]);
+
+        return redirect()->route('user.dashboard')->with('success', 'Demande acceptée !');
+    }
 }

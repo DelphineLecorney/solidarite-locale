@@ -14,6 +14,7 @@ class HelpRequest extends Model
         'user_id',
         'status',
         'scheduled_at',
+        'accepted_by_user_id',
     ];
 
     public function user()
