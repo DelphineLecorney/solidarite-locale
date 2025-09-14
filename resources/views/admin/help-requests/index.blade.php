@@ -22,45 +22,65 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    <table class="table table-bordered">
-        <thead>
+    <table class="table table-striped table-bordered table-hover">
+        <thead class="table-dark">
             <tr>
+                <th>#</th>
+                <th>Date</th>
                 <th>Titre</th>
-                <th>Description</th>
-                <th>Utilisateur</th>
                 <th>Statut</th>
+                <th>Utilisateur</th>
+                <th>Adresse</th>
+                <th>Catégorie</th>
+                <th>Description</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            @forelse($helpRequests as $helpRequest)
+            @forelse($helpRequests as $request)
                 <tr>
-                    <td>{{ $helpRequest->title }}</td>
-                    <td>{{ Str::limit($helpRequest->description, 50) }}</td>
-                    <td>{{ $helpRequest->user->name ?? 'N/A' }}</td>
-                    <td>{{ ucfirst($helpRequest->status) }}</td>
+                    <td>{{ $request->id }}</td>
+                    <td>{{ $request->created_at->format('d/m/Y') }}</td>
+                    <td>{{ $request->title }}</td>
                     <td>
-                        <!-- Voir -->
-                        <a href="{{ route('admin.help-requests.show', $helpRequest) }}" class="btn btn-info btn-sm">Voir</a>
-
-                        <!-- Modifier -->
-                        <a href="{{ route('admin.help-requests.edit', $helpRequest) }}" class="btn btn-warning btn-sm">Modifier</a>
-
-                        <!-- Supprimer -->
-                        <form action="{{ route('admin.help-requests.destroy', $helpRequest) }}" method="POST" class="d-inline"
-                              onsubmit="return confirm('Voulez-vous vraiment supprimer cette demande ?');">
+                        @php
+                            $badgeClass = match ($request->status) {
+                                'pending' => 'bg-warning text-dark',
+                                'accepted' => 'bg-success',
+                                'done' => 'bg-danger',
+                                default => 'bg-secondary',
+                            };
+                        @endphp
+                        <span class="badge {{ $badgeClass }}">{{ ucfirst($request->status) }}</span>
+                    </td>
+                    <td>{{ $request->user->name }}</td>
+                    <td>
+                        {{ $request->address?->street ?? 'Adresse non renseignée' }},
+                        {{ $request->address?->postcode ?? '' }} {{ $request->address?->city ?? '' }}
+                    </td>
+                    <td>{{ $request->category->name }}</td>
+                    <td>{{ $request->description }}</td>
+                    <td>
+                        <a href="{{ route('admin.help-requests.show', $request->id) }}"
+                            class="btn btn-sm btn-info">Voir</a>
+                        <a href="{{ route('admin.help-requests.edit', $request->id) }}"
+                            class="btn btn-sm btn-warning">Modifier</a>
+                        <form action="{{ route('admin.help-requests.destroy', $request) }}" method="POST"
+                            class="d-inline">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                            <button class="btn btn-sm btn-danger"
+                                onclick="return confirm('Supprimer cette demande ?')">Supprimer</button>
                         </form>
                     </td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="4" class="text-center">Aucune demande trouvée.</td>
+                    <td colspan="8" class="text-center">Aucune demande pour le moment</td>
                 </tr>
             @endforelse
         </tbody>
+    </table>
     </table>
 </div>
 @endsection

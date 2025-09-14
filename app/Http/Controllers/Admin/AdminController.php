@@ -46,10 +46,10 @@ class AdminController extends Controller
 
 
     // Liste des utilisateurs
-    public function users()
+    public function user()
     {
-        $users = User::all();
-        return view('admin.users.index', compact('users'));
+        $users = User::paginate(10);
+        return view('admin.user.index', compact('users'));
     }
 
     // Supprimer un utilisateur

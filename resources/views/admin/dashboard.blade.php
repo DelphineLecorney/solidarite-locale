@@ -67,20 +67,20 @@
         </div>
     </div>
 
-    <!-- Tableau des dernières demandes -->
-    <h2 class="mb-3">Dernières demandes d’aide</h2>
+    <!-- Tableau des demandes -->
+    <h2 class="mb-3">Demandes d’aide</h2>
 
     <table class="table table-striped table-bordered table-hover">
         <thead class="table-dark">
             <tr>
                 <th>#</th>
+                <th>Date</th>
                 <th>Titre</th>
+                <th>Statut</th>
                 <th>Utilisateur</th>
+                <th>Adresse</th>
                 <th>Catégorie</th>
                 <th>Description</th>
-                <th>Adresse</th>
-                <th>Date</th>
-                <th>Statut</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -88,15 +88,8 @@
             @forelse($helpRequests as $request)
                 <tr>
                     <td>{{ $request->id }}</td>
-                    <td>{{ $request->title }}</td>
-                    <td>{{ $request->user->name }}</td>
-                    <td>{{ $request->category->name }}</td>
-                    <td>{{ $request->description}}</td>
-                    <td>
-    {{ $request->address?->street ?? 'Adresse non renseignée' }},
-    {{ $request->address?->postcode ?? '' }} {{ $request->address?->city ?? '' }}
-</td>
                     <td>{{ $request->created_at->format('d/m/Y') }}</td>
+                    <td>{{ $request->title }}</td>
                     <td>
                         @php
                             $badgeClass = match ($request->status) {
@@ -108,13 +101,24 @@
                         @endphp
                         <span class="badge {{ $badgeClass }}">{{ ucfirst($request->status) }}</span>
                     </td>
+                    <td>{{ $request->user->name }}</td>
                     <td>
-                        <a href="{{ route('admin.help-requests.show', $request->id) }}" class="btn btn-sm btn-info">Voir</a>
-                        <a href="{{ route('admin.help-requests.edit', $request->id) }}" class="btn btn-sm btn-warning">Modifier</a>
-                        <form action="{{ route('admin.help-requests.destroy', $request) }}" method="POST" class="d-inline">
+                        {{ $request->address?->street ?? 'Adresse non renseignée' }},
+                        {{ $request->address?->postcode ?? '' }} {{ $request->address?->city ?? '' }}
+                    </td>
+                    <td>{{ $request->category->name }}</td>
+                    <td>{{ $request->description }}</td>
+                    <td>
+                        <a href="{{ route('admin.help-requests.show', $request->id) }}"
+                            class="btn btn-sm btn-info">Voir</a>
+                        <a href="{{ route('admin.help-requests.edit', $request->id) }}"
+                            class="btn btn-sm btn-warning">Modifier</a>
+                        <form action="{{ route('admin.help-requests.destroy', $request) }}" method="POST"
+                            class="d-inline">
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-sm btn-danger" onclick="return confirm('Supprimer cette demande ?')">Supprimer</button>
+                            <button class="btn btn-sm btn-danger"
+                                onclick="return confirm('Supprimer cette demande ?')">Supprimer</button>
                         </form>
                     </td>
                 </tr>

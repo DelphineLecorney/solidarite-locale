@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1 class="mb-4">Tableau de bord</h1>
+    <h1 class="mb-4">Demandes d'aide disponibles</h1>
 
     <div class="row mb-5">
         <!-- Mes demandes -->
@@ -23,8 +23,6 @@
     </div>
 
     <!-- Tableau principal -->
-    <h2 class="mb-3">Toutes les demandes d’aide</h2>
-
     <table class="table table-striped table-bordered table-hover">
         <thead class="table-dark">
             <tr>
@@ -64,7 +62,6 @@
                     </td>
                     <td>{{ $request->category->name }}</td>
                     <td>{{ $request->description }}</td>
-
                     <td>
                         <a href="{{ route('user.help-requests.show', $request->id) }}" class="btn btn-sm btn-info">Voir</a>
 
