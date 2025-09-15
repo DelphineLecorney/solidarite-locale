@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class HelpRequest extends Model
 {
+    // @return HasMany<Application
+
     protected $fillable = [
         'title',
         'description',
@@ -29,5 +31,9 @@ class HelpRequest extends Model
     public function address()
     {
         return $this->belongsTo(Address::class);
+    }
+    public function participations()
+    {
+        return $this->hasMany(Participation::class, 'volunteer_id');
     }
 }

@@ -27,11 +27,11 @@
 @auth
     @if(auth()->user()->role === 'admin')
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('admin.dashboard') }}">Demandes disponibles</a>
+            <a class="nav-link" href="{{ route('admin.dashboard') }}">Dashboard</a>
         </li>
     @elseif(auth()->user()->role === 'user')
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('user.dashboard') }}">Demandes disponibles</a>
+            <a class="nav-link" href="{{ route('user.dashboard') }}">Dashboard</a>
         </li>
     @endif
 @endauth

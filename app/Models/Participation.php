@@ -15,7 +15,8 @@ class Participation extends Model
         'mission_id',
         'volunteer_id',
         'status',
-        'hours_logged'
+        'hours_logged',
+        'quantity_received',
     ];
 
     public function mission()

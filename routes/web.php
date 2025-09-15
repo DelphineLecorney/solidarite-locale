@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\User\MissionController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Admin\HelpRequestController as AdminHelpRequestController;
 use App\Http\Controllers\HomeController;
@@ -24,13 +25,18 @@ Route::post('register', [RegisterController::class, 'register']);
 // Dashboard utilisateurs
 Route::middleware(['auth', 'role:user'])->prefix('user')->name('user.')->group(function () {
     Route::get('dashboard', [UserController::class, 'dashboard'])->name('dashboard');
-    Route::resource('help-requests', UserHelpRequestController::class);
-    Route::post('help-requests/{helpRequest}/accept', [UserHelpRequestController::class, 'accept'])
-        ->name('help-requests.accept');
-    Route::post('help-requests/{helpRequest}/done', [UserHelpRequestController::class, 'done'])
-        ->name('help-requests.done');
-});
 
+    // Help requests
+    Route::resource('help-requests', UserHelpRequestController::class);
+    Route::post('help-requests/{helpRequest}/accept', [UserHelpRequestController::class, 'accept'])->name('help-requests.accept');
+    Route::post('help-requests/{helpRequest}/done', [UserHelpRequestController::class, 'done'])->name('help-requests.done');
+
+    Route::prefix('missions')->name('missions.')->middleware('auth')->group(function () {
+        Route::get('/', [MissionController::class, 'index'])->name('index');
+        Route::post('/{mission}/participate', [MissionController::class, 'participate'])->name('participate');
+        Route::get('my-participations', [MissionController::class, 'myParticipations'])->name('my-participations');
+    });
+});
 
 // Dashboard associations
 Route::middleware(['auth', 'role:association'])->group(function () {

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\HelpRequest;
+use App\Models\Mission;
+use App\Models\Participation;
 use App\Models\HelpCategory;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,6 +24,11 @@ class DashboardController extends Controller
         $requestsCount = HelpRequest::count();
         $categoriesCount = $categories->count();
         $othersCount = 0;
+
+        $missionsCount = Mission::where('is_published', true)->count();
+        $myParticipationsCount = Participation::where('volunteer_id', Auth::id())->count();
+        $myRequestsCount = HelpRequest::where('user_id', Auth::id())->count();
+
 
         // Requête principale
         $query = HelpRequest::with(['user', 'category', 'address'])->latest();
@@ -44,9 +51,10 @@ class DashboardController extends Controller
             ->latest()
             ->paginate(10);
 
-
         // Choisir la vue selon le rôle
         $view = Auth::user()->is_admin ? 'admin.dashboard' : 'user.dashboard';
+
+        dd($missionsCount);
 
         return view($view, compact(
             'usersCount',
@@ -54,7 +62,9 @@ class DashboardController extends Controller
             'categoriesCount',
             'othersCount',
             'helpRequests',
-            'categories'
+            'categories',
+            'missionsCount',
+            'myParticipationsCount'
         ));
     }
 }

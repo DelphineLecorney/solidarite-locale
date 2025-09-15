@@ -18,8 +18,9 @@ class Mission extends Model
         'address_id',
         'capacity',
         'is_published',
-        'starts_at',
-        'ends_at'
+        'quantity_available',
+        'unit',
+        'type',
     ];
 
     public function organization()
@@ -34,6 +35,6 @@ class Mission extends Model
 
     public function participations()
     {
-        return $this->hasMany(Participation::class);
+        return $this->hasMany(Participation::class, 'mission_id');
     }
 }
