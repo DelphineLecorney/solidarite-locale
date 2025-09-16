@@ -30,8 +30,6 @@ class AdminController extends Controller
         $missionsCount = Mission::where('is_published', true)->count();
         $query = HelpRequest::query()->latest();
         $helpRequests = $query->paginate(10);
-        $myParticipationsCount = Participation::where('volunteer_id', Auth::id())->count();
-        $myRequestsCount = HelpRequest::where('user_id', Auth::id())->count();
 
         if ($request->category) {
             $query->where('category_id', $request->category);
@@ -47,7 +45,6 @@ class AdminController extends Controller
             'helpRequests',
             'categories',
             'missionsCount',
-            'myParticipationsCount'
         ));
     }
 

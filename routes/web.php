@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\User\MissionController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Admin\HelpRequestController as AdminHelpRequestController;

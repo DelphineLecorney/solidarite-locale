@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\HelpCategory;
 use App\Models\HelpRequest;
+use App\Models\Mission;
+use App\Models\Organization;
 
 class HomeController extends Controller
 {
@@ -24,8 +26,18 @@ class HomeController extends Controller
         $usersCount = User::count();
         $requestsCount = HelpRequest::count();
         $categoriesCount = $categories->count();
+        $missionsCount = Mission::where('is_published', true)->count();
+        $organizationsCount = Organization::count();
         $othersCount = 0;
 
-        return view('home', compact('usersCount', 'requestsCount', 'categoriesCount', 'othersCount'));
+        return view('home', compact(
+            'usersCount',
+            'requestsCount',
+            'categoriesCount',
+            'othersCount',
+            'missionsCount',
+            'organizationsCount'
+
+        ));
     }
 }

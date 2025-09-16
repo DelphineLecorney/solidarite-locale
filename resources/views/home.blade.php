@@ -93,19 +93,45 @@
                 </div>
             </div>
 
-            <!-- Autres stats -->
-            {{-- <div class="col-md-3">
-                <div class="card shadow-sm mb-3 border-0">
+            <!-- Nombre d'organisations -->
+            <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm h-100">
+                    <div class="card-body d-flex align-items-center">
+                        <i class="bi bi-buildings-fill fs-1 text-primary me-3"></i>
+                        <div>
+                            <h5 class="card-title">Nombre d'organisations</h5>
+                            <p class="card-text fs-2">{{ $organizationsCount }}</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nombre de missions -->
+            <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm h-100">
+                    <div class="card-body d-flex align-items-center">
+                        <i class="bi bi-briefcase-fill fs-1 text-success me-3"></i>
+                        <div>
+                            <h5 class="card-title">Nombre de missions</h5>
+                            <p class="card-text fs-2">{{ $missionsCount }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm h-100">
                     <div class="card-body d-flex align-items-center">
                         <i class="bi bi-bar-chart-fill fs-1 text-danger me-3"></i>
                         <div>
                             <h5 class="card-title">Autres</h5>
                             <p class="card-text fs-2">{{ $othersCount }}</p>
-                            <a href="#" class="btn btn-sm btn-outline-danger mt-2">Voir</a>
                         </div>
                     </div>
                 </div>
-            </div> --}}
+            </div>
+
         </div>
     </div>
 
