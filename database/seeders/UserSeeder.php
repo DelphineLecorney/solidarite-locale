@@ -10,10 +10,8 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        // 1. Créer des adresses
         $addresses = Address::factory()->count(2)->create();
 
-        // 2. Créer des utilisateurs en assignant une adresse
         User::create([
             'name' => 'Jean Dupont',
             'email' => 'jean@example.com',

@@ -22,15 +22,6 @@
         </div>
     </div>
 
-    @if(session('success'))
-    <div class="alert alert-success">{{ session('success') }}</div>
-@endif
-
-@if(session('error'))
-    <div class="alert alert-danger">{{ session('error') }}</div>
-@endif
-
-
     <h1 class="mb-4">Missions disponibles</h1>
     <table class="table">
         <thead>

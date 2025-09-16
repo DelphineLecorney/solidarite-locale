@@ -11,11 +11,21 @@ use Illuminate\Support\Facades\Auth;
 class RegisterController extends Controller
 {
 
+    /**
+     * Affiche le formulaire de connexion.
+     *
+     * @return \Illuminate\View\View
+     */
     public function showRegistrationForm()
     {
         return view('auth.register');
     }
 
+    /**
+     * Définit dynamiquement l'URL de redirection après la connexion.
+     *
+     * @return string
+     */
     protected function redirectTo()
     {
         $user = Auth::user();
@@ -28,7 +38,12 @@ class RegisterController extends Controller
         };
     }
 
-
+    /**
+     * Traite les données du formulaire et crée un nouvel utilisateur.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function register(Request $request)
     {
         $request->validate([

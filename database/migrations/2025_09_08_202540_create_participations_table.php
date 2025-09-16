@@ -15,8 +15,7 @@ class CreateParticipationsTable extends Migration
             $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');
             $table->integer('hours_logged')->nullable();
             $table->timestamps();
-
-            $table->unique(['mission_id', 'volunteer_id']); // un volontaire une fois par mission
+            $table->unique(['mission_id', 'volunteer_id']);
         });
     }
 

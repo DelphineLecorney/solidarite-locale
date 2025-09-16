@@ -7,8 +7,15 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * Factory pour générer des instances fictives du modèle User.
+ *
+ * Utilisée pour les tests et le seeding, cette factory crée des utilisateurs
+ * avec des données réalistes : nom, email, mot de passe, etc.
+ *
+ * @method array definition() Définit les attributs simulés.
+ * @method static unverified() Crée un utilisateur avec email non vérifié.
  */
+
 class UserFactory extends Factory
 {
     /**
@@ -17,10 +24,14 @@ class UserFactory extends Factory
     protected static ?string $password;
 
     /**
-     * Define the model's default state.
+     * Définit les valeurs fictives par défaut pour le modèle User.
      *
-     * @return array<string, mixed>
+     * Génère un nom, une adresse email unique, une date de vérification,
+     * un mot de passe hashé et un token de session.
+     *
+     * @return array<string, mixed> Un tableau d'attributs simulés pour un utilisateur.
      */
+
     public function definition(): array
     {
         return [
@@ -33,11 +44,16 @@ class UserFactory extends Factory
     }
 
     /**
-     * Indicate that the model's email address should be unverified.
+     * Indique que l'adresse email de l'utilisateur doit être non vérifiée.
+     *
+     * Modifie l'état du modèle pour que 'email_verified_at' soit null.
+     *
+     * @return static
      */
+
     public function unverified(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'email_verified_at' => null,
         ]);
     }

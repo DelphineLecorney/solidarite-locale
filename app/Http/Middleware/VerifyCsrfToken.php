@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 class VerifyCsrfToken
 {
     /**
-     * Handle an incoming request.
+     * Traiter une demande entrante.
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */

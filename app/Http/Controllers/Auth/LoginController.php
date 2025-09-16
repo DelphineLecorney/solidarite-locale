@@ -8,11 +8,21 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
+    /**
+     * Affiche le formulaire de connexion
+     * @return \Illuminate\View\View
+     */
     public function showLoginForm()
     {
         return view('auth.login');
     }
 
+    /**
+     * Traite les informations de connexion et authentifie l'utilisateur.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
@@ -26,7 +36,7 @@ class LoginController extends Controller
                 return redirect()->route('admin.dashboard');
             } elseif ($user->role === 'association') {
                 return redirect()->route('missions');
-            } else { // 'user'
+            } else {
                 return redirect()->route('user.dashboard');
             }
         }
@@ -36,6 +46,12 @@ class LoginController extends Controller
         ])->onlyInput('email');
     }
 
+    /**
+     * Déconnecte l'utilisateur et détruit la session.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function logout(Request $request)
     {
         Auth::logout();

@@ -21,7 +21,6 @@ class HelpRequestSeeder extends Seeder
             return;
         }
 
-        // Créons 10 demandes aléatoires
         for ($i = 1; $i <= 10; $i++) {
             HelpRequest::create([
                 'title' => "Demande d'aide #$i",

@@ -16,7 +16,7 @@ class CreateApplicationsTable extends Migration
             $table->enum('status', ['pending', 'accepted', 'rejected'])->default('pending');
             $table->timestamps();
 
-            $table->unique(['help_request_id', 'volunteer_id']); // évite spams de candidatures répétées
+            $table->unique(['help_request_id', 'volunteer_id']);
         });
     }
 

@@ -3,14 +3,18 @@
 @section('content')
     <div class="container mt-5">
 
-
         <div class="text-center my-5">
-            <p class="lead mb-4">
+            <h2>Notre mission</h2>
+            <p class="lead">
+                Faciliter la solidarité locale en connectant ceux qui ont besoin d’aide avec ceux qui veulent aider.<br>
                 Une plateforme pour rapprocher les bénévoles et ceux qui ont besoin d’aide dans votre ville.
-            </p>
+
+        </div>
+        <div class="text-center my-5">
             <a href="{{ route('login') }}" class="btn btn-primary btn-lg me-2">Se connecter</a>
             <a href="{{ route('register') }}" class="btn btn-success btn-lg">S’inscrire</a>
         </div>
+
 
 
         <h2 class="text-center mb-4">Aperçu des Dashboard</h2>
@@ -43,8 +47,7 @@
                         <h5 class="card-title">Create</h5>
                         <p class="card-text">Créer une demande d’aide.</p>
                     </div>
-                    <img src="{{ asset('images/Create.png') }}" class="card-img-top"
-                        alt="Dashboard Suivi des demandes">
+                    <img src="{{ asset('images/Create.png') }}" class="card-img-top" alt="Dashboard Suivi des demandes">
                 </div>
             </div>
 
@@ -104,13 +107,6 @@
                 </div>
             </div> --}}
         </div>
-    </div>
-
-    <div class="text-center my-5">
-        <h2>Notre mission</h2>
-        <p class="lead">
-            Faciliter la solidarité locale en connectant ceux qui ont besoin d’aide avec ceux qui veulent aider.
-        </p>
     </div>
 
     </div>

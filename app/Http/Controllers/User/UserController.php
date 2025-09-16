@@ -10,6 +10,15 @@ use App\Models\Participation;
 
 class UserController extends Controller
 {
+    /**
+     * Affiche le tableau de bord de l'utilisateur connecté.
+     *
+     * Récupère les statistiques personnelles, les demandes d'aide,
+     * les missions et les participations, puis les transmet à la vue.
+     *
+     * @return Response
+     */
+
     public function dashboard()
     {
         $userId = Auth::id();

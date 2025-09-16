@@ -6,24 +6,18 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+
     public function up(): void
     {
         Schema::table('help_requests', function (Blueprint $table) {
-            // Ajout de la colonne
             $table->foreignId('accepted_by_user_id')
                 ->nullable()
                 ->constrained('users')
                 ->onDelete('set null')
-                ->after('user_id'); // tu peux mettre "after" où tu veux
+                ->after('user_id');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::table('help_requests', function (Blueprint $table) {

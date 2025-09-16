@@ -1,60 +1,72 @@
+/* ✅ Importation de Bootstrap pour bénéficier des styles de base */
 @import "bootstrap/dist/css/bootstrap.min.css";
-
-
+/* 📦 Sources utilisées pour le traitement des vues et scripts */
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
+/* 🎨 Définition du thème personnalisé */
 @theme {
     --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
         "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
         "Noto Color Emoji";
 }
 
+ /* 🌌 Couleur de fond globale */
 body {
     background-color: #93a2b1;
 }
 
-.table th, .table td {
+/* 📊 Style général des cellules de tableau */
+.table th,
+.table td {
     vertical-align: middle;
 }
 
+/* 📅 Colonne : Date */
 .table th.date-col,
 .table td.date-col {
     width: 100px;
 }
 
+/* 📝 Colonne : Titre */
 .table th.title-col,
 .table td.title-col {
     width: 150px;
 }
 
+/* 🚦 Colonne : Statut */
 .table th.status-col,
 .table td.status-col {
     width: 120px;
 }
 
+/* 👤 Colonne : Utilisateur */
 .table th.user-col,
 .table td.user-col {
     width: 150px;
 }
 
+/* 📍 Colonne : Adresse */
 .table th.address-col,
 .table td.address-col {
     width: 250px;
 }
 
+/* 🗂️ Colonne : Catégorie */
 .table th.category-col,
 .table td.category-col {
     width: 150px;
 }
 
+/* 🧾 Colonne : Description */
 .table th.desc-col,
 .table td.desc-col {
     width: 250px;
 }
 
+/* 🛠️ Colonne : Actions */
 .table th.actions-col,
 .table td.actions-col {
     width: 220px;

@@ -11,7 +11,8 @@ use App\Models\Participation;
 class MissionController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Affice la liste complète des missions.
+     * @return \Illuminate\View\View
      */
 
     public function index()
@@ -26,9 +27,10 @@ class MissionController extends Controller
         return view('user.missions.index', compact('missions', 'myParticipationsCount'));
     }
 
-
     /**
-     * Show the form for creating a new resource.
+     * Affiche le formulaire de création d'une nouvelle mission.
+     *
+     * @return \Illuminate\View\View
      */
     public function create()
     {
@@ -36,7 +38,10 @@ class MissionController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Enregistre une nouvelle demande de mission avec les données validées.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -44,7 +49,10 @@ class MissionController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Affiche les détails d'une mission spécifique.
+     *
+     * @param HelpRequest $helpRequest
+     * @return \Illuminate\View\View
      */
     public function show(string $id)
     {
@@ -52,7 +60,10 @@ class MissionController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Affiche le formulaire d'édition pour une mission.
+     *
+     * @param HelpRequest $helpRequest
+     * @return \Illuminate\View\View
      */
     public function edit(string $id)
     {
@@ -60,7 +71,11 @@ class MissionController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Met à jour une mission avec les données validées du formulaire.
+     *
+     * @param Request $request
+     * @param HelpRequest $helpRequest
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, string $id)
     {
@@ -68,18 +83,27 @@ class MissionController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Supprime une mission et redirige avec un message de confirmation.
+     *
+     * @param HelpRequest $helpRequest
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(string $id)
     {
         //
     }
 
+    /**
+     * Permet à l'utilisateur connecté de participer à une mission donnée.
+     *
+     * Cette méthode vérifie si l'utilisateur est éligible, puis l'ajoute à la mission.
+     * @param Mission $mission L'entité Mission à laquelle l'utilisateur souhaite participer.
+     * @return Response Une réponse HTTP indiquant le résultat de l'opération.
+     */
     public function participate(Mission $mission)
     {
         $userId = auth::id();
 
-        // Vérifier si l'utilisateur a déjà participé
         if ($mission->participations()->where('volunteer_id', $userId)->exists()) {
             return back()->with('error', 'Vous participez déjà à cette mission !');
         }
@@ -92,9 +116,14 @@ class MissionController extends Controller
         return back()->with('success', 'Vous participez à cette mission !');
     }
 
-
-
-
+    /**
+     * Affiche la liste des missions auxquelles l'utilisateur connecté participe.
+     *
+     * Cette méthode récupère les participations de l'utilisateur actuel
+     * et les transmet à la vue pour affichage.
+     *
+     * @return Response La réponse HTTP contenant la vue des participations.
+     */
     public function myParticipations()
     {
         $participations = Participation::with('mission.organization')

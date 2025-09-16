@@ -19,26 +19,25 @@
                 </div>
             </div>
         </div>
-            <!-- Mes missions -->
+        <!-- Mes missions -->
 
-<div class="col-md-4">
-    <div class="card shadow-sm mb-3 border-0">
-        <div class="card-body d-flex align-items-center">
-            <i class="bi bi-briefcase-fill fs-1 text-info me-3"></i>
-            <div>
-                <h5 class="card-title">Missions disponibles</h5>
-                <p class="card-text fs-2">{{ $missionsCount ?? 0 }}</p>
+        <div class="col-md-4">
+            <div class="card shadow-sm mb-3 border-0">
+                <div class="card-body d-flex align-items-center">
+                    <i class="bi bi-briefcase-fill fs-1 text-info me-3"></i>
+                    <div>
+                        <h5 class="card-title">Missions disponibles</h5>
+                        <p class="card-text fs-2">{{ $missionsCount ?? 0 }}</p>
 
-                <a href="{{ route('user.missions.index') }}" class="btn btn-sm btn-outline-info mt-2">
-                    Voir
-                </a>
+                        <a href="{{ route('user.missions.index') }}" class="btn btn-sm btn-outline-info mt-2">
+                            Voir
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
 
     </div>
-
 
 
 
@@ -73,6 +72,7 @@
                             };
                         @endphp
                         <span class="badge {{ $badgeClass }}">{{ ucfirst($request->status) }}</span>
+
                     </td>
                     <td>{{ $request->user->name }}</td>
                     <td>

@@ -10,14 +10,12 @@ class OrganizationSeeder extends Seeder
 
     public function run(): void
     {
-        // Récupérer un utilisateur existant
-        $owner = \App\Models\User::first(); // par exemple le premier user
+        $owner = \App\Models\User::first();
         if (!$owner) {
             $this->command->warn('Aucun utilisateur trouvé, Organisation non créée.');
             return;
         }
 
-        // Récupérer une adresse existante
         $addr = \App\Models\Address::first();
         if (!$addr) {
             $this->command->warn('Aucune adresse trouvée, Organisation non créée.');

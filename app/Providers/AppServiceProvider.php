@@ -8,7 +8,7 @@ use Illuminate\Pagination\Paginator;
 class AppServiceProvider extends ServiceProvider
 {
     /**
-     * Register any application services.
+     * Enregistrez tous les services d'application.
      */
     public function register(): void
     {
@@ -16,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
     }
 
     /**
-     * Bootstrap any application services.
+     * Démarrer tous les services d'application.
      */
     public function boot(): void
     {

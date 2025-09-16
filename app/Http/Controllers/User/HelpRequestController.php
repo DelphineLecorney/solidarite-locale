@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\Auth;
 class HelpRequestController extends Controller
 {
 
+    /**
+     * Affiche la liste complète des demandes d'aide
+     *
+     * @return \Illuminate\View\View
+     */
     public function index()
     {
         $userId = Auth::id();
@@ -28,7 +33,11 @@ class HelpRequestController extends Controller
         return view('user.help-requests.index', compact('helpRequests', 'acceptedRequests'));
     }
 
-
+    /**
+     * Affiche le formulaire de création d'une nouvelle demande d'aide.
+     *
+     * @return \Illuminate\View\View
+     */
     public function create()
     {
         $categories = HelpCategory::all();
@@ -37,6 +46,12 @@ class HelpRequestController extends Controller
         return view('user.help-requests.create', compact('categories', 'addresses'));
     }
 
+    /**
+     * Enregistre une nouvelle demande d'aide avec les données validées.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -47,7 +62,6 @@ class HelpRequestController extends Controller
             'city' => 'required|string|max:255',
             'postcode' => ['required', 'regex:/^[0-9]{4}$/'],
         ]);
-
 
 
         if ($request->filled('address_id')) {
@@ -76,15 +90,26 @@ class HelpRequestController extends Controller
             ->with('success', 'Demande créée avec succès !');
     }
 
+    /**
+     * Affiche les détails d'une demande d'aide spécifique.
+     *
+     * @param HelpRequest $helpRequest
+     * @return \Illuminate\View\View
+     */
     public function show(HelpRequest $helpRequest)
     {
-        // $this->authorize('view', $helpRequest);
         return view('user.help-requests.show', compact('helpRequest'));
     }
 
+    /**
+     * Affiche le formulaire d'édition pour une demande d'aide.
+     *
+     * @param HelpRequest $helpRequest
+     * @return \Illuminate\View\View
+     */
     public function edit(HelpRequest $helpRequest)
     {
-        // Vérifie que l'utilisateur est bien l'auteur
+
         if ($helpRequest->user_id != Auth::id()) {
             abort(403);
         }
@@ -92,20 +117,32 @@ class HelpRequestController extends Controller
         return view('user.help-requests.edit', compact('helpRequest'));
     }
 
+    /**
+     * Met à jour une demande d'aide avec les données validées du formulaire.
+     *
+     * @param Request $request
+     * @param HelpRequest $helpRequest
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(Request $request, HelpRequest $helpRequest)
     {
-        // Vérifie que l'utilisateur est bien l'auteur
+
         if ($helpRequest->user_id != Auth::id()) {
             abort(403);
         }
 
-        // Mise à jour sécurisée
         $helpRequest->update($request->only(['title', 'description']));
 
         return redirect()->route('user.help-requests.index')
             ->with('success', 'Demande mise à jour avec succès !');
     }
 
+    /**
+     * Supprime une demande d'aide et redirige avec un message de confirmation.
+     *
+     * @param HelpRequest $helpRequest
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy(HelpRequest $helpRequest)
     {
         if ($helpRequest->user_id != Auth::id()) {
@@ -118,6 +155,12 @@ class HelpRequestController extends Controller
             ->with('success', 'Demande supprimée avec succès !');
     }
 
+    /**
+     * Marque une demande d'aide comme acceptée.
+     *
+     * @param HelpRequest $helpRequest
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function accept(HelpRequest $helpRequest)
     {
 
@@ -134,6 +177,12 @@ class HelpRequestController extends Controller
         return redirect()->route('user.dashboard')->with('success', 'Demande acceptée !');
     }
 
+    /**
+     * Marque une demande d'aide comme terminée.
+     *
+     * @param HelpRequest $helpRequest
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function done(HelpRequest $helpRequest)
     {
         if ($helpRequest->accepted_by_user_id !== Auth::id()) {

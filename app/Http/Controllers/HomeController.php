@@ -8,6 +8,15 @@ use App\Models\HelpRequest;
 
 class HomeController extends Controller
 {
+
+    /**
+     * Affiche la page d'accueil de l'application.
+     *
+     * Cette méthode peut charger des données générales comme les missions disponibles,
+     * les statistiques globales ou des éléments de présentation, puis les transmettre à la vue.
+     *
+     * @return Response La réponse HTTP contenant la vue de la page d'accueil.
+     */
     public function home()
     {
         // Statistiques globales

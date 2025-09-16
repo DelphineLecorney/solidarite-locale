@@ -59,16 +59,16 @@
 
         <table class="table table-striped table-bordered table-hover">
             <thead class="table-dark">
-        <tr>
-            <th class="date-col">Date</th>
-            <th class="title-col">Titre</th>
-            <th class="status-col">Statut</th>
-            <th class="user-col">Utilisateur</th>
-            <th class="address-col">Adresse</th>
-            <th class="category-col">Catégorie</th>
-            <th class="desc-col">Description</th>
-            <th class="actions-col">Actions</th>
-        </tr>
+                <tr>
+                    <th class="date-col">Date</th>
+                    <th class="title-col">Titre</th>
+                    <th class="status-col">Statut</th>
+                    <th class="user-col">Utilisateur</th>
+                    <th class="address-col">Adresse</th>
+                    <th class="category-col">Catégorie</th>
+                    <th class="desc-col">Description</th>
+                    <th class="actions-col">Actions</th>
+                </tr>
             </thead>
             <tbody>
                 @forelse($helpRequests as $helpRequest)
@@ -95,9 +95,12 @@
                         <td>{{ $helpRequest->category->name }}</td>
                         <td>{{ Str::limit($helpRequest->description, 50) }}</td>
                         <td>
-                            <a href="{{ route('user.help-requests.show', $helpRequest) }}" class="btn btn-info btn-sm">Voir</a>
-                            <a href="{{ route('user.help-requests.edit', $helpRequest) }}" class="btn btn-warning btn-sm">Modifier</a>
-                            <form action="{{ route('user.help-requests.destroy', $helpRequest) }}" method="POST" class="d-inline">
+                            <a href="{{ route('user.help-requests.show', $helpRequest) }}"
+                                class="btn btn-info btn-sm">Voir</a>
+                            <a href="{{ route('user.help-requests.edit', $helpRequest) }}"
+                                class="btn btn-warning btn-sm">Modifier</a>
+                            <form action="{{ route('user.help-requests.destroy', $helpRequest) }}" method="POST"
+                                class="d-inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm"
@@ -120,16 +123,16 @@
 
         <table class="table table-striped table-bordered table-hover">
             <thead class="table-dark">
-        <tr>
-            <th class="date-col">Date</th>
-            <th class="title-col">Titre</th>
-            <th class="status-col">Statut</th>
-            <th class="user-col">Utilisateur</th>
-            <th class="address-col">Adresse</th>
-            <th class="category-col">Catégorie</th>
-            <th class="desc-col">Description</th>
-            <th class="actions-col">Actions</th>
-        </tr>
+                <tr>
+                    <th class="date-col">Date</th>
+                    <th class="title-col">Titre</th>
+                    <th class="status-col">Statut</th>
+                    <th class="user-col">Utilisateur</th>
+                    <th class="address-col">Adresse</th>
+                    <th class="category-col">Catégorie</th>
+                    <th class="desc-col">Description</th>
+                    <th class="actions-col">Actions</th>
+                </tr>
             </thead>
             <tbody>
                 @forelse($acceptedRequests as $acceptedRequest)
@@ -156,11 +159,14 @@
                         <td>{{ $acceptedRequest->category->name ?? 'N/A' }}</td>
                         <td>{{ Str::limit($acceptedRequest->description, 50) }}</td>
                         <td>
-                            <a href="{{ route('user.help-requests.show', $acceptedRequest) }}" class="btn btn-info btn-sm">Voir</a>
-                            <a href="{{ route('user.help-requests.edit', $acceptedRequest) }}" class="btn btn-warning btn-sm">Modifier</a>
+                            <a href="{{ route('user.help-requests.show', $acceptedRequest) }}"
+                                class="btn btn-info btn-sm">Voir</a>
+                            <a href="{{ route('user.help-requests.edit', $acceptedRequest) }}"
+                                class="btn btn-warning btn-sm">Modifier</a>
 
                             @if ($acceptedRequest->status === 'accepted' && $acceptedRequest->accepted_by_user_id === auth()->id())
-                                <form action="{{ route('user.help-requests.done', $acceptedRequest->id) }}" method="POST" class="d-inline">
+                                <form action="{{ route('user.help-requests.done', $acceptedRequest->id) }}" method="POST"
+                                    class="d-inline">
                                     @csrf
                                     <button type="submit" class="btn btn-sm btn-success"
                                         onclick="return confirm('Marquer cette demande comme terminée ?')">
@@ -169,7 +175,8 @@
                                 </form>
                             @endif
 
-                            <form action="{{ route('user.help-requests.destroy', $acceptedRequest) }}" method="POST" class="d-inline">
+                            <form action="{{ route('user.help-requests.destroy', $acceptedRequest) }}" method="POST"
+                                class="d-inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm"
