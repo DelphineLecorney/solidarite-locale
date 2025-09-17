@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1 class="mb-4">Demandes d'aide disponibles</h1>
 
+<x-dashboard-section-title type="dashboard">
+    Dashboard
+</x-dashboard-section-title>
 
     <div class="row mb-5">
         <x-dashboard-card title="Mes demandes" :count="$myRequestsCount" icon="bi-gear-fill"
@@ -15,6 +17,10 @@
             iconBgClass="bg-primary bg-opacity-10 text-primary" buttonText="Voir" :buttonUrl="route('user.missions.my-participations')" buttonClass="primary" />
     </div>
 
+
+<x-dashboard-section-title type="requests">
+    Mes Demandes d'aide 
+</x-dashboard-section-title>
 <x-dashboard-table title="Mes demandes d'aide">
     <x-slot name="header">
         <tr>

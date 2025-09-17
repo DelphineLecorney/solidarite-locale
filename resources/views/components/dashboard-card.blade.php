@@ -1,3 +1,40 @@
+@php
+    $presets = [
+        'dashboard' => [
+            'icon' => 'bi-speedometer2',
+            'iconBgClass' => 'bg-primary bg-opacity-10 text-primary',
+            'buttonClass' => 'primary',
+            'buttonIcon' => 'bi-speedometer2',
+        ],
+        'requests' => [
+            'icon' => 'bi-gear-fill',
+            'iconBgClass' => 'bg-success bg-opacity-10 text-success',
+            'buttonClass' => 'success',
+            'buttonIcon' => 'bi-gear-fill',
+        ],
+        'missions' => [
+            'icon' => 'bi-briefcase-fill',
+            'iconBgClass' => 'bg-info bg-opacity-10 text-info',
+            'buttonClass' => 'info',
+            'buttonIcon' => 'bi-briefcase-fill',
+        ],
+        'participations' => [
+            'icon' => 'bi-check2-circle',
+            'iconBgClass' => 'bg-warning bg-opacity-10 text-warning',
+            'buttonClass' => 'warning',
+            'buttonIcon' => 'bi-check2-circle',
+        ],
+
+    ];
+
+    if (!empty($type) && isset($presets[$type])) {
+        $icon = $icon ?? $presets[$type]['icon'];
+        $iconBgClass = $iconBgClass ?? $presets[$type]['iconBgClass'];
+        $buttonClass = $buttonClass ?? $presets[$type]['buttonClass'];
+        $buttonIcon = $buttonIcon ?? $presets[$type]['buttonIcon'];
+    }
+@endphp
+
 <div class="col-md-3 mb-4">
     <div class="card shadow-lg border-0 rounded-4 overflow-hidden h-100">
         <div class="card-body d-flex align-items-center">
@@ -7,9 +44,9 @@
             <div>
                 <h6 class="text-muted mb-1">{{ $title }}</h6>
 
-                @isset($count)
+                @if (!empty($count))
                     <h3 class="fw-bold mb-2">{{ $count }}</h3>
-                @endisset
+                @endif
 
                 @if (isset($buttonText) && isset($buttonUrl))
                     <a href="{{ $buttonUrl }}"

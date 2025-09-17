@@ -6,9 +6,14 @@
 @endif
 
 @section('content')
-    <x-dashboard-card title="Mes participations" :count="$myParticipationsCount" icon="bi-check2-circle"
-        iconBgClass="bg-primary bg-opacity-10 text-primary" buttonText="Voir" :buttonUrl="route('user.missions.my-participations')" buttonClass="primary" />
+    <div class="row mb-5">
+        <x-dashboard-card title="Retour au dashboard" icon="bi-house-fill"
+            iconBgClass="bg-secondary bg-opacity-10 text-secondary" buttonText="Dashboard" :buttonUrl="route('user.dashboard')"
+            buttonClass="secondary" />
 
+        <x-dashboard-card title="Mes participations" :count="$myParticipationsCount" icon="bi-check2-circle"
+            iconBgClass="bg-primary bg-opacity-10 text-primary" buttonText="Voir" :buttonUrl="route('user.missions.my-participations')" buttonClass="primary" />
+    </div>
     <h1 class="mb-4">Missions disponibles</h1>
     <table class="table">
         <thead>

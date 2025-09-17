@@ -1,9 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+        <x-dashboard-card title="Retour au dashboard" icon="bi-house-fill"
+            iconBgClass="bg-secondary bg-opacity-10 text-secondary" buttonText="Dashboard" :buttonUrl="route('user.dashboard')"
+            buttonClass="secondary" />
     <div class="container mt-5">
+        
         <h1 class="mb-4">Mes participations aux missions</h1>
-
 
 
         @if (session('status'))

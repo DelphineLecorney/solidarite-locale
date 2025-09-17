@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1 class="mb-4">Demandes d'aide disponibles</h1>
-
     @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
@@ -12,7 +10,9 @@
             iconBgClass="bg-secondary bg-opacity-10 text-secondary" buttonText="Dashboard" :buttonUrl="route('admin.dashboard')"
             buttonClass="secondary" />
     </div>
-
+    <x-dashboard-section-title type="requests">
+        Demandes d'aide
+    </x-dashboard-section-title>
     <x-dashboard-table title="Demandes d'aide">
         <x-slot name="header">
             <tr>

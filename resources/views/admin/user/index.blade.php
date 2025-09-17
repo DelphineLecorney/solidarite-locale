@@ -9,6 +9,9 @@
         buttonClass="secondary" />
 </div>
 
+<x-dashboard-section-title type="users">
+    Liste des utilisateurs
+</x-dashboard-section-title>
 
 <x-dashboard-table title="Liste des utilisateurs">
 <x-slot name="header">

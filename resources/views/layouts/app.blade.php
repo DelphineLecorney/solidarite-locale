@@ -21,13 +21,11 @@
             <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
                 <div class="container">
                     <a class="navbar-brand d-flex align-items-center fw-bold" href="{{ url('/') }}">
-                        <i class="bi bi-people-fill me-2"></i>
+                        <i class="bi bi-people-fill me-3"></i>
                         Solidarité Locale
                     </a>
                 </div>
             </nav>
-
-
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
