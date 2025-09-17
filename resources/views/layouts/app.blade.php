@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solidarité Locale</title>
 
+
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -15,7 +17,17 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm sticky-top">
         <div class="container-fluid">
-            <a class="navbar-brand fw-bold" href="{{ route('home') }}">Solidarité Locale</a>
+
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+                <div class="container">
+                    <a class="navbar-brand d-flex align-items-center fw-bold" href="{{ url('/') }}">
+                        <i class="bi bi-people-fill me-2"></i>
+                        Solidarité Locale
+                    </a>
+                </div>
+            </nav>
+
+
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,32 +66,28 @@
                     </div>
                 @endif
 
-                <div class="d-flex align-items-center">
-                    <span class="text-white me-3">
-                        Bienvenue
-                        @auth
-                            {{ Auth::user()->name }}
+                <div class="bg-light justify-content-center p-3 rounded shadow-sm mb-3 mx-auto">
+                    <h2 class="mb-1">Bonjour @auth {{ Auth::user()->name }}
                         @else
-                            invité
-                        @endauth
-                    </span>
-                    {{--
-                    <div class="bg-light p-4 rounded shadow-sm mb-4">
-                        <h2 class="mb-1">Bonjour {{ Auth::user()->name }} 👋</h2>
-                        <p class="text-muted mb-0">Voici un aperçu de vos activités.</p>
-                    </div> --}}
-
-                    @guest
-                        <a href="{{ route('login') }}" class="btn btn-outline-light btn-sm me-2">Se connecter</a>
-                        <a href="{{ route('register') }}" class="btn btn-light btn-sm">S’inscrire</a>
-                    @else
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button class="btn btn-outline-light btn-sm" type="submit">Déconnexion</button>
-                        </form>
-                    @endguest
+                        invité @endauth 👋</h2>
                 </div>
+
+
+                @guest
+                    <a href="{{ route('login') }}" class="btn btn-outline-light btn-sm me-2">Se connecter</a>
+                    <a href="{{ route('register') }}" class="btn btn-light btn-sm">S’inscrire</a>
+                @else
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button class="btn btn-danger btn-sm rounded-pill px-3 d-flex align-items-center gap-2"
+                            type="submit">
+                            <i class="bi bi-box-arrow-right"></i>
+                            Déconnexion
+                        </button>
+                    </form>
+                @endguest
             </div>
+        </div>
         </div>
     </nav>
 
