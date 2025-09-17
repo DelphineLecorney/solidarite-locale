@@ -14,9 +14,7 @@
                 @if (isset($buttonText) && isset($buttonUrl))
                     <a href="{{ $buttonUrl }}"
                        class="btn btn-sm btn-{{ $buttonClass ?? 'secondary' }} text-white rounded-pill">
-                        @isset($buttonIcon)
-                            <i class="bi {{ $buttonIcon }} me-1"></i>
-                        @endisset
+                        <i class="bi {{ $buttonIcon ?? $icon }} me-1"></i>
                         {{ $buttonText }}
                     </a>
                 @endif

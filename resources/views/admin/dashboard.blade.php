@@ -13,7 +13,6 @@
             buttonText="Gérer"
             :buttonUrl="route('admin.user')"
             buttonClass="primary"
-            buttonIcon="bi-gear-fill"
         />
 
         <x-dashboard-card
@@ -24,7 +23,6 @@
             buttonText="Gérer"
             :buttonUrl="route('admin.help-requests.index')"
             buttonClass="success"
-            buttonIcon="bi-gear-fill"
         />
 
         <x-dashboard-card
@@ -35,7 +33,6 @@
             buttonText="Gérer"
             :buttonUrl="route('admin.missions')"
             buttonClass="warning"
-            buttonIcon="bi-briefcase-fill"
         />
 
         <x-dashboard-card
@@ -48,8 +45,8 @@
 
     <h2 class="mb-3">Demandes d’aide</h2>
 
-    <table class="table table-striped table-bordered table-hover">
-        <thead class="table-dark">
+    <x-dashboard-table title="Demandes d'aide">
+        <x-slot name="header">
             <tr>
                 <th>#</th>
                 <th>Date</th>
@@ -61,8 +58,7 @@
                 <th>Description</th>
                 <th>Actions</th>
             </tr>
-        </thead>
-        <tbody>
+      </x-slot>
             @forelse($helpRequests as $request)
                 <tr>
                     <td>{{ $request->id }}</td>
@@ -110,5 +106,6 @@
 
     <div class="d-flex justify-content-center mt-4">
         {{ $helpRequests->links('pagination::bootstrap-5') }}
+        </x-dashboard-table>
     </div>
 @endsection

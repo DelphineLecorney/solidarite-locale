@@ -1,32 +1,26 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="col-md-4">
-        <div class="card shadow-sm mb-3 border-0">
-            <div class="card-body d-flex align-items-center">
-                <i class="bi bi-house-fill fs-1 text-secondary me-3"></i>
-                <div>
-                    <h5 class="card-title">Retour au dashboard</h5>
-                    <a href="{{ route('admin.dashboard') }}" class="btn btn-sm btn-outline-secondary mt-2">
-                        Dashboard
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="row mb-5">
+    <x-dashboard-card title="Retour au dashboard" icon="bi-house-fill"
+        iconBgClass="bg-secondary bg-opacity-10 text-secondary"
+        buttonText="Dashboard"
+        :buttonUrl="route('admin.dashboard')"
+        buttonClass="secondary" />
+</div>
 
-    <h1>Liste des utilisateurs</h1>
 
-    <table class="table table-striped">
-        <thead>
+<x-dashboard-table title="Liste des utilisateurs">
+<x-slot name="header">
+
             <tr>
                 <th>#</th>
                 <th>Nom</th>
                 <th>Email</th>
                 <th>Actions</th>
             </tr>
-        </thead>
-        <tbody>
+            </x-slot>
+
             @foreach ($users as $user)
                 <tr>
                     <td>{{ $user->id }}</td>
@@ -47,5 +41,6 @@
 
     <div class="d-flex justify-content-center">
         {{ $users->links('pagination::bootstrap-5') }}
+        </x-dashboard-table>
     </div>
 @endsection
