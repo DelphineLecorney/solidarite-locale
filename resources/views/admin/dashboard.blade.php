@@ -3,71 +3,49 @@
 @section('content')
     <h1 class="mb-4">Tableau de bord Admin</h1>
 
-    <!-- Cartes statistiques -->
     <div class="row mb-5">
-        <!-- Utilisateurs -->
-        <div class="col-md-3">
-            <div class="card shadow-sm mb-3 border-0">
-                <div class="card-body d-flex align-items-center">
-                    <i class="bi bi-people-fill fs-1 text-primary me-3"></i>
-                    <div>
-                        <h5 class="card-title">Utilisateurs</h5>
-                        <p class="card-text fs-2">{{ $usersCount ?? 0 }}</p>
-                        <a href="{{ route('admin.user') }}" class="btn btn-sm btn-outline-primary mt-2">
-                            Gérer les utilisateurs
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Demandes d’aide -->
-        <div class="col-md-3">
-            <div class="card shadow-sm mb-3 border-0">
-                <div class="card-body d-flex align-items-center">
-                    <i class="bi bi-cart-fill fs-1 text-success me-3"></i>
-                    <div>
-                        <h5 class="card-title">Demandes d’aide</h5>
-                        <p class="card-text fs-2">{{ $requestsCount ?? 0 }}</p>
-                        <a href="{{ route('admin.help-requests.index') }}" class="btn btn-sm btn-outline-success mt-2">
-                            Gérer les demandes
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <x-dashboard-card
+            title="Utilisateurs"
+            :count="$usersCount ?? 0"
+            icon="bi-people-fill"
+            iconBgClass="bg-primary bg-opacity-10 text-primary"
+            buttonText="Gérer"
+            :buttonUrl="route('admin.user')"
+            buttonClass="primary"
+            buttonIcon="bi-gear-fill"
+        />
 
-        <!-- Missions -->
-        <div class="col-md-3">
-            <div class="card shadow-sm mb-3 border-0">
-                <div class="card-body d-flex align-items-center">
-                    <i class="bi bi-list-check fs-1 text-warning me-3"></i>
-                    <div>
-                        <h5 class="card-title">Missions</h5>
-                        <p class="card-text fs-2">{{ $missionsCount ?? 0 }}</p>
-                        <a href="{{ route('admin.missions') }}" class="btn btn-sm btn-outline-warning mt-2">
-                            Gérer les missions
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <x-dashboard-card
+            title="Demandes d’aide"
+            :count="$requestsCount ?? 0"
+            icon="bi-cart-fill"
+            iconBgClass="bg-success bg-opacity-10 text-success"
+            buttonText="Gérer"
+            :buttonUrl="route('admin.help-requests.index')"
+            buttonClass="success"
+            buttonIcon="bi-gear-fill"
+        />
 
-        <!-- Autres -->
-        <div class="col-md-3">
-            <div class="card shadow-sm mb-3 border-0">
-                <div class="card-body d-flex align-items-center">
-                    <i class="bi bi-box-arrow-right fs-1 text-danger me-3"></i>
-                    <div>
-                        <h5 class="card-title">Autres</h5>
-                        <p class="card-text fs-2">{{ $othersCount ?? 0 }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <x-dashboard-card
+            title="Missions"
+            :count="$missionsCount ?? 0"
+            icon="bi-list-check"
+            iconBgClass="bg-warning bg-opacity-10 text-warning"
+            buttonText="Gérer"
+            :buttonUrl="route('admin.missions')"
+            buttonClass="warning"
+            buttonIcon="bi-briefcase-fill"
+        />
+
+        <x-dashboard-card
+            title="Autres"
+            :count="$othersCount ?? 0"
+            icon="bi-box-arrow-right"
+            iconBgClass="bg-danger bg-opacity-10 text-danger"
+        />
     </div>
 
-    <!-- Tableau des demandes -->
     <h2 class="mb-3">Demandes d’aide</h2>
 
     <table class="table table-striped table-bordered table-hover">
@@ -110,21 +88,21 @@
                     <td>{{ $request->description }}</td>
                     <td>
                         <a href="{{ route('admin.help-requests.show', $request->id) }}"
-                            class="btn btn-sm btn-info">Voir</a>
+                           class="btn btn-sm btn-info">Voir</a>
                         <a href="{{ route('admin.help-requests.edit', $request->id) }}"
-                            class="btn btn-sm btn-warning">Modifier</a>
+                           class="btn btn-sm btn-warning">Modifier</a>
                         <form action="{{ route('admin.help-requests.destroy', $request) }}" method="POST"
-                            class="d-inline">
+                              class="d-inline">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-sm btn-danger"
-                                onclick="return confirm('Supprimer cette demande ?')">Supprimer</button>
+                                    onclick="return confirm('Supprimer cette demande ?')">Supprimer</button>
                         </form>
                     </td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="8" class="text-center">Aucune demande pour le moment</td>
+                    <td colspan="9" class="text-center">Aucune demande pour le moment</td>
                 </tr>
             @endforelse
         </tbody>

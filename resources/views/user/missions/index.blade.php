@@ -6,21 +6,8 @@
 @endif
 
 @section('content')
-    <!-- Mes participations -->
-    <div class="col-md-4">
-        <div class="card shadow-sm mb-3 border-0">
-            <div class="card-body d-flex align-items-center">
-                <i class="bi bi-check2-circle fs-1 text-primary me-3"></i>
-                <div>
-                    <h5 class="card-title">Mes participations</h5>
-                    <p class="card-text fs-2">{{ $myParticipationsCount ?? 0 }}</p>
-                    <a href="{{ route('user.missions.my-participations') }}" class="btn btn-sm btn-outline-primary mt-2">
-                        Voir
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
+    <x-dashboard-card title="Mes participations" :count="$myParticipationsCount" icon="bi-check2-circle"
+        iconBgClass="bg-primary bg-opacity-10 text-primary" buttonText="Voir" :buttonUrl="route('user.missions.my-participations')" buttonClass="primary" />
 
     <h1 class="mb-4">Missions disponibles</h1>
     <table class="table">
@@ -51,8 +38,6 @@
                             @csrf
                             <button type="submit" class="btn btn-success">Participer</button>
                         </form>
-
-
                     </td>
                 </tr>
             @empty

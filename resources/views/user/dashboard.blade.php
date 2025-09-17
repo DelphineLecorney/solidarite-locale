@@ -3,123 +3,67 @@
 @section('content')
     <h1 class="mb-4">Demandes d'aide disponibles</h1>
 
+
     <div class="row mb-5">
-        <!-- Mes demandes -->
-        <div class="col-md-4">
-            <div class="card shadow-sm mb-3 border-0">
-                <div class="card-body d-flex align-items-center">
-                    <i class="bi bi-gear-fill fs-1 text-success me-3"></i>
-                    <div>
-                        <h5 class="card-title">Gérer mes demandes</h5>
-                        <p class="card-text fs-2">{{ $myRequestsCount ?? 0 }}</p>
-                        <a href="{{ route('user.help-requests.index') }}" class="btn btn-sm btn-outline-success mt-2">
-                            Gérer
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Mes missions -->
+        <x-dashboard-card title="Mes demandes" :count="$myRequestsCount" icon="bi-gear-fill"
+            iconBgClass="bg-success bg-opacity-10 text-success" buttonText="Gérer" :buttonUrl="route('user.help-requests.index')" buttonClass="success" />
 
-        <div class="col-md-4">
-            <div class="card shadow-sm mb-3 border-0">
-                <div class="card-body d-flex align-items-center">
-                    <i class="bi bi-briefcase-fill fs-1 text-info me-3"></i>
-                    <div>
-                        <h5 class="card-title">Missions disponibles</h5>
-                        <p class="card-text fs-2">{{ $missionsCount ?? 0 }}</p>
+        <x-dashboard-card title="Missions disponibles" :count="$missionsCount" icon="bi-briefcase-fill"
+            iconBgClass="bg-info bg-opacity-10 text-info" buttonText="Voir" :buttonUrl="route('user.missions.index')" buttonClass="info" />
 
-                        <a href="{{ route('user.missions.index') }}" class="btn btn-sm btn-outline-info mt-2">
-                            Voir
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        <x-dashboard-card title="Mes participations" :count="$myParticipationsCount" icon="bi-check2-circle"
+            iconBgClass="bg-primary bg-opacity-10 text-primary" buttonText="Voir" :buttonUrl="route('user.missions.my-participations')" buttonClass="primary" />
     </div>
 
+<x-dashboard-table title="Mes demandes d'aide">
+    <x-slot name="header">
+        <tr>
+            <th>Date</th>
+            <th>Titre</th>
+            <th>Statut</th>
+            <th>Utilisateur</th>
+            <th>Adresse</th>
+            <th>Catégorie</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </x-slot>
 
-
-    <!-- Tableau principal -->
-    <table class="table table-striped table-bordered table-hover">
-        <thead class="table-dark">
-            <tr>
-                <th>#</th>
-                <th>Date</th>
-                <th>Titre</th>
-                <th>Statut</th>
-                <th>Utilisateur</th>
-                <th>Adresse</th>
-                <th>Catégorie</th>
-                <th>Description</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($helpRequests as $request)
-                <tr>
-                    <td>{{ $request->id }}</td>
-                    <td>{{ $request->created_at->format('d/m/Y') }}</td>
-                    <td>{{ $request->title }}</td>
-                    <td>
-                        @php
-                            $badgeClass = match ($request->status) {
-                                'pending' => 'bg-warning text-dark',
-                                'accepted' => 'bg-success',
-                                'done' => 'bg-danger',
-                                default => 'bg-secondary',
-                            };
-                        @endphp
-                        <span class="badge {{ $badgeClass }}">{{ ucfirst($request->status) }}</span>
-
-                    </td>
-                    <td>{{ $request->user->name }}</td>
-                    <td>
-                        {{ $request->address?->street ?? 'Adresse non renseignée' }},
-                        {{ $request->address?->postcode ?? '' }}
-                        {{ $request->address?->city ?? '' }}
-                    </td>
-                    <td>{{ $request->category->name }}</td>
-                    <td>{{ $request->description }}</td>
-                    <td>
-                        <a href="{{ route('user.help-requests.show', $request->id) }}" class="btn btn-sm btn-info">Voir</a>
-
-                        @if ($request->user_id === auth()->id())
-                            <a href="{{ route('user.help-requests.edit', $request->id) }}"
-                                class="btn btn-sm btn-warning">Modifier</a>
-                            <form action="{{ route('user.help-requests.destroy', $request->id) }}" method="POST"
-                                class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-sm btn-danger"
-                                    onclick="return confirm('Supprimer cette demande ?')">Supprimer</button>
-                            </form>
-                        @elseif($request->status === 'pending')
-                            <form action="{{ route('user.help-requests.accept', $request->id) }}" method="POST"
-                                class="d-inline">
-                                @csrf
-                                <button type="submit" class="btn btn-sm btn-success"
-                                    onclick="return confirm('Accepter cette demande ?')">Accepter</button>
-                            </form>
-                            <form action="{{ route('user.help-requests.done', $request->id) }}" method="POST"
-                                class="d-inline">
-                                @csrf
-                                <button type="submit" class="btn btn-sm btn-danger"
-                                    onclick="return confirm('Marquer comme terminée ?')">
-                                    Terminer
-                                </button>
-                            </form>
-                        @endif
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="9" class="text-center">Aucune demande pour le moment</td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
+    @forelse($helpRequests as $helpRequest)
+        <tr>
+            <td>{{ $helpRequest->created_at->format('d/m/Y') }}</td>
+            <td>{{ $helpRequest->title }}</td>
+            <td>
+                @php
+                    $badgeClass = match ($helpRequest->status) {
+                        'pending' => 'bg-warning text-dark',
+                        'accepted' => 'bg-success',
+                        'done' => 'bg-danger',
+                        default => 'bg-secondary',
+                    };
+                @endphp
+                <span class="badge {{ $badgeClass }}">{{ ucfirst($helpRequest->status) }}</span>
+            </td>
+            <td>{{ $helpRequest->user->name ?? 'N/A' }}</td>
+            <td>{{ $helpRequest->address?->street ?? 'Adresse non renseignée' }}, {{ $helpRequest->address?->postcode ?? '' }} {{ $helpRequest->address?->city ?? '' }}</td>
+            <td>{{ $helpRequest->category->name }}</td>
+            <td>{{ Str::limit($helpRequest->description, 50) }}</td>
+            <td>
+                <a href="{{ route('user.help-requests.show', $helpRequest) }}" class="btn btn-info btn-sm">Voir</a>
+                <a href="{{ route('user.help-requests.edit', $helpRequest) }}" class="btn btn-warning btn-sm">Modifier</a>
+                <form action="{{ route('user.help-requests.destroy', $helpRequest) }}" method="POST" class="d-inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Supprimer cette demande ?')">Supprimer</button>
+                </form>
+            </td>
+        </tr>
+    @empty
+        <tr>
+            <td colspan="8" class="text-center">Aucune demande trouvée.</td>
+        </tr>
+    @endforelse
+</x-dashboard-table>
 
     <div class="d-flex justify-content-center mt-4">
         {{ $helpRequests->links('pagination::bootstrap-5') }}
