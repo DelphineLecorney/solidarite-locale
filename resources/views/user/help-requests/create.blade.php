@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
+
+<x-dashboard-section-title type="titleBlue">
+    Création de demandes d'aide
+</x-dashboard-section-title>
     <form action="{{ route('user.help-requests.store') }}" method="POST">
         @csrf
         <div class="mb-3">

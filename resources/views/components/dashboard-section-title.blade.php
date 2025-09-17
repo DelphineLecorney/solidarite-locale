@@ -1,6 +1,13 @@
 @php
 
     $presets = [
+        'titleBlue' => [
+            'icon' => '',
+            'color' => 'primary',
+            'iconBgClass' => 'bg-primary bg-opacity-10 text-primary',
+            'buttonClass' => 'primary',
+            'buttonIcon' => 'bi-speedometer2',
+        ],
         'dashboard' => [
             'icon' => 'bi-speedometer2',
             'color' => 'primary',
@@ -15,6 +22,21 @@
             'buttonClass' => 'success',
             'buttonIcon' => 'bi-gear-fill',
         ],
+        'greenRequests' => [
+            'icon' => '',
+            'color' => 'success',
+            'iconBgClass' => 'bg-success bg-opacity-10 text-success',
+            'buttonClass' => 'success',
+            'buttonIcon' => 'bi-gear-fill',
+        ],
+        'blueRequests' => [
+            'icon' => '',
+            'color' => 'primary',
+            'iconBgClass' => 'bg-primary bg-opacity-10 text-primary',
+            'buttonClass' => 'primary',
+            'buttonIcon' => 'bi-speedometer2',
+        ],
+
         'missions' => [
             'icon' => 'bi-briefcase-fill',
             'color' => 'info',
@@ -75,6 +97,5 @@
 
     <<?php echo $level; ?> class="fw-bold mb-0 text-{{ $color ?? 'primary' }} text-center">
         {{ $slot }}
-    </<?php echo $level; ?>>
+        </<?php echo $level; ?>>
 </div>
-

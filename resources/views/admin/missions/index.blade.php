@@ -6,21 +6,18 @@
 @endif
 
 @section('content')
-
-<x-dashboard-section-title type="titleBlue">
-    Missions
-</x-dashboard-section-title>
+    <x-dashboard-section-title type="titleBlue">
+        Missions
+    </x-dashboard-section-title>
     <div class="row mb-5">
         <x-dashboard-card title="Retour au dashboard" icon="bi-house-fill"
-            iconBgClass="bg-secondary bg-opacity-10 text-secondary" buttonText="Dashboard" :buttonUrl="route('user.dashboard')"
+            iconBgClass="bg-secondary bg-opacity-10 text-secondary" buttonText="Dashboard" :buttonUrl="route('admin.dashboard')"
             buttonClass="secondary" />
 
-        <x-dashboard-card title="Mes participations" :count="$myParticipationsCount" icon="bi-check2-circle"
-            iconBgClass="bg-primary bg-opacity-10 text-primary" buttonText="Voir" :buttonUrl="route('user.missions.my-participations')" buttonClass="primary" />
     </div>
-<x-dashboard-section-title type="missions">
-    Missions disponibles
-</x-dashboard-section-title>
+    <x-dashboard-section-title type="missions">
+        Missions disponibles
+    </x-dashboard-section-title>
     <table class="table">
         <thead>
             <tr>
@@ -42,14 +39,17 @@
                     <td>
                         {{ \Carbon\Carbon::parse($mission->starts_at)->format('d/m/Y') ?? '-' }}
                         {{ \Carbon\Carbon::parse($mission->ends_at)->format('d/m/Y') ?? '-' }}
-
                     </td>
                     <td>
-                        <form action="{{ route('user.missions.participate', $mission) }}" method="POST">
+                        {{-- <a href="{{ route('admin.missions.show', $mission->id) }}" class="btn btn-sm btn-info">Voir</a> --}}
+                        {{-- <a href="{{ route('admin.missions.destroy.edit', $mission->id) }}"
+                        class="btn btn-sm btn-warning">Modifier</a> --}}
+                        <form action="{{ route('admin.missions.destroy', $mission) }}" method="POST" class="d-inline">
                             @csrf
-                            <button type="submit" class="btn btn-success">Participer</button>
+                            @method('DELETE')
+                            <button class="btn btn-sm btn-danger"
+                                onclick="return confirm('Supprimer cette mission ?')">Supprimer</button>
                         </form>
-                    </td>
                 </tr>
             @empty
                 <tr>

@@ -19,9 +19,9 @@
 
 
 <x-dashboard-section-title type="requests">
-    Mes Demandes d'aide 
+    Demandes d'aide
 </x-dashboard-section-title>
-<x-dashboard-table title="Mes demandes d'aide">
+<x-dashboard-table title="Demandes d'aide">
     <x-slot name="header">
         <tr>
             <th>Date</th>

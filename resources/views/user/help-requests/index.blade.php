@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<h1 class="mb-4">Mon Tableau de bord</h1>
+@section('content')
 
 <div class="row mb-5">
     <x-dashboard-card title="Retour au dashboard" icon="bi-house-fill"
@@ -28,7 +28,9 @@
 </div>
 
 <div class="container">
-    <h2>Mes demandes d'aide</h2>
+<x-dashboard-section-title type="blueRequests">
+   Mes demandes d'aide
+</x-dashboard-section-title>
 
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -94,7 +96,9 @@
 
 @if($acceptedRequests->isNotEmpty())
     <div class="container mt-5" id="accepted-requests">
-        <h2>Mes demandes acceptées</h2>
+<x-dashboard-section-title type="greenRequests">
+   Mes demandes acceptées
+</x-dashboard-section-title>
 
         <x-dashboard-table title="Mes demandes acceptées">
             <x-slot name="header">

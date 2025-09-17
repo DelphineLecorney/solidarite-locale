@@ -69,8 +69,9 @@ class AdminController extends Controller
     public function destroyUser(User $user)
     {
         $user->delete();
-        return redirect()->route('admin.users')->with('success', 'Utilisateur supprimé.');
+        return redirect()->route('admin.user')->with('success', 'Utilisateur supprimé.');
     }
+
 
     /**
      * Affiche la liste des missions disponibles.
@@ -79,7 +80,7 @@ class AdminController extends Controller
      */
     public function missions()
     {
-        $missions = Mission::all();
+        $missions = Mission::with('organization', 'address')->paginate(10);
         return view('admin.missions.index', compact('missions'));
     }
 
