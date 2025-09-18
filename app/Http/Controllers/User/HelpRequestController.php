@@ -22,15 +22,15 @@ class HelpRequestController extends Controller
         $userId = Auth::id();
 
         $helpRequests = HelpRequest::where('user_id', $userId)
-            ->with(['category', 'address'])
+            ->with(['category', 'address', 'user'])
             ->latest()
+            ->paginate(10);
+
+        $acceptedRequests = HelpRequest::where('status', 'accepted')
+            ->with(['user', 'address', 'category'])
             ->get();
 
-        $acceptedRequests = HelpRequest::where('accepted_by_user_id', $userId)
-            ->with(['user', 'category', 'address'])
-            ->get();
-
-        return view('user.help-requests.index', compact('helpRequests', 'acceptedRequests'));
+        return view('user.help-requests.index', compact('acceptedRequests', 'helpRequests'));
     }
 
     /**

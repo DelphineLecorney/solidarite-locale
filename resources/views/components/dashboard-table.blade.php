@@ -6,8 +6,12 @@
     </div>
     <div class="card-body table-responsive">
         <table class="table table-striped table-bordered table-hover mb-0">
-            {{ $slot }}
+            <thead>
+                {{ $header ?? '' }}
+            </thead>
+            <tbody>
+                {{ $slot }}
+            </tbody>
         </table>
     </div>
 </div>
-
